@@ -1,5 +1,5 @@
 {
-  "name": "@acme/auth",
+  "name": "@menuplanner/auth",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -12,14 +12,15 @@
   "license": "MIT",
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "dev": "tsc",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
     "generate": "dotenv -e ../../.env -- pnpx @better-auth/cli generate --output ../db/src/auth-schema.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/db": "workspace:*",
     "@better-auth/expo": "1.2.12",
+    "@menuplanner/db": "workspace:*",
     "@t3-oss/env-nextjs": "^0.13.6",
     "better-auth": "1.2.12",
     "next": "^15.3.3",
@@ -28,14 +29,14 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:*",
-    "@acme/prettier-config": "workspace:*",
-    "@acme/tsconfig": "workspace:*",
     "@better-auth/cli": "1.2.12",
+    "@menuplanner/eslint-config": "workspace:*",
+    "@menuplanner/prettier-config": "workspace:*",
+    "@menuplanner/tsconfig": "workspace:*",
     "@types/react": "catalog:react19",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@menuplanner/prettier-config"
 }
