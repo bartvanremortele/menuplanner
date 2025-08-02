@@ -4,14 +4,14 @@
   "rsc": true,
   "tsx": true,
   "tailwind": {
-    "config": "../../tooling/tailwind/web.ts",
-    "css": "unused.css",
+    "config": "tailwind.config.ts",
+    "css": "src/app/globals.css",
     "baseColor": "zinc",
     "cssVariables": true
   },
   "aliases": {
-    "utils": "@menuplanner/ui",
-    "components": "src/",
-    "ui": "src/"
+    "utils": "~/lib/utils",
+    "components": "~/app/_components",
+    "ui": "~/app/_components/ui"
   }
 }

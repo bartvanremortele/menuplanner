@@ -12,7 +12,6 @@ const config = {
     "@menuplanner/api",
     "@menuplanner/auth",
     "@menuplanner/db",
-    "@menuplanner/ui",
     "@menuplanner/validators",
   ],
 

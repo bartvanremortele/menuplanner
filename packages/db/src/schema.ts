@@ -1,6 +1,6 @@
 import { sql } from "drizzle-orm";
 import { pgTable, primaryKey } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
+import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
 // Import user from auth-schema for references
@@ -152,6 +152,14 @@ export const RecipeIngredient = pgTable(
 export const CreateRecipeSchema = createInsertSchema(Recipe, {
   name: z.string().max(256),
   description: z.string(),
+}).omit({
+  createdByUserId: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const UpdateRecipeSchema = createUpdateSchema(Recipe).extend({
+  id: z.number(),
 });
 
 export const CreateLabelSchema = createInsertSchema(Label, {

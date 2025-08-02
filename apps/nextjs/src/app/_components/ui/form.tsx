@@ -1,8 +1,8 @@
 "use client";
 
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { cn } from "@menuplanner/ui";
-import { Slot } from "radix-ui";
+import { cn } from "~/lib/utils";
+import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 import type {
 	ControllerProps,
@@ -113,12 +113,12 @@ export function FormLabel({
 
 export function FormControl({
 	...props
-}: React.ComponentProps<typeof Slot.Slot>) {
+}: React.ComponentProps<typeof Slot>) {
 	const { error, formItemId, formDescriptionId, formMessageId } =
 		useFormField();
 
 	return (
-		<Slot.Slot
+		<Slot
 			id={formItemId}
 			aria-describedby={
 				!error
