@@ -3,28 +3,10 @@
 TODO:
 `npx turbo link`
 
-> [!NOTE]
->
-> menuplanner now uses better-auth for authentication!
-> Look out for bugs as we're working through the last issues,
-> especially, the oauth proxy might not play very nice with Expo
-> so you might need to disable that in [`@menuplanner/auth`](./packages/auth/src/index.ts)
+NOTES:
 
-## Installation
-
-> [!NOTE]
->
-> Make sure to follow the system requirements specified in [`package.json#engines`](./package.json#L4) before proceeding.
-
-There are two ways of initializing an app using the `menuplanner` starter. You can either use this repository as a template:
-
-![use-as-template](https://github.com/t3-oss/menuplanner/assets/51714798/bb6c2e5d-d8b6-416e-aeb3-b3e50e2ca994)
-
-or use Turbo's CLI to init your project (use PNPM as package manager):
-
-```bash
-npx create-turbo@latest -e https://github.com/t3-oss/menuplanner
-```
+Link to OAuth App:
+https://console.cloud.google.com/auth/clients/711427149795-3gb98n0r3841hvtv0bbts8btegt58vr6.apps.googleusercontent.com?authuser=1&inv=1&invt=Ab4YWw&project=menuplanner-467806
 
 ## About
 

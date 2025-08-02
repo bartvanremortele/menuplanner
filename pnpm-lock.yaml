@@ -57,9 +57,21 @@ importers:
       '@turbo/gen':
         specifier: ^2.5.4
         version: 2.5.4(@types/node@22.15.29)(typescript@5.8.3)
+      csv-parse:
+        specifier: ^6.1.0
+        version: 6.1.0
+      csv-stringify:
+        specifier: ^6.6.0
+        version: 6.6.0
+      dotenv:
+        specifier: ^17.2.1
+        version: 17.2.1
       prettier:
         specifier: 'catalog:'
         version: 3.5.3
+      tsx:
+        specifier: ^4.20.3
+        version: 4.20.3
       turbo:
         specifier: ^2.5.4
         version: 2.5.4
@@ -151,6 +163,15 @@ importers:
         specifier: 2.2.2
         version: 2.2.2
     devDependencies:
+      '@babel/core':
+        specifier: ^7.27.4
+        version: 7.27.4
+      '@babel/preset-env':
+        specifier: ^7.27.2
+        version: 7.27.2(@babel/core@7.27.4)
+      '@babel/runtime':
+        specifier: ^7.27.4
+        version: 7.27.4
       '@menuplanner/api':
         specifier: workspace:*
         version: link:../../packages/api
@@ -166,15 +187,6 @@ importers:
       '@menuplanner/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
-      '@babel/core':
-        specifier: ^7.27.4
-        version: 7.27.4
-      '@babel/preset-env':
-        specifier: ^7.27.2
-        version: 7.27.2(@babel/core@7.27.4)
-      '@babel/runtime':
-        specifier: ^7.27.4
-        version: 7.27.4
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -324,12 +336,12 @@ importers:
 
   packages/auth:
     dependencies:
-      '@menuplanner/db':
-        specifier: workspace:*
-        version: link:../db
       '@better-auth/expo':
         specifier: 1.2.12
         version: 1.2.12(better-auth@1.2.12)
+      '@menuplanner/db':
+        specifier: workspace:*
+        version: link:../db
       '@t3-oss/env-nextjs':
         specifier: ^0.13.6
         version: 0.13.6(arktype@2.1.20)(typescript@5.8.3)(valibot@1.0.0-beta.15(typescript@5.8.3))(zod@3.25.49)
@@ -349,6 +361,9 @@ importers:
         specifier: 'catalog:'
         version: 3.25.49
     devDependencies:
+      '@better-auth/cli':
+        specifier: 1.2.12
+        version: 1.2.12(@neondatabase/serverless@0.10.0)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@19.1.6)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(kysely@0.28.2)(mysql2@3.11.3)(postgres@3.4.4)(react@19.0.0)
       '@menuplanner/eslint-config':
         specifier: workspace:*
         version: link:../../tooling/eslint
@@ -358,9 +373,6 @@ importers:
       '@menuplanner/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
-      '@better-auth/cli':
-        specifier: 1.2.12
-        version: 1.2.12(@neondatabase/serverless@0.10.0)(@opentelemetry/api@1.9.0)(@planetscale/database@1.19.0)(@types/pg@8.11.10)(@types/react@19.1.6)(@vercel/postgres@0.10.0(utf-8-validate@6.0.4))(kysely@0.28.2)(mysql2@3.11.3)(postgres@3.4.4)(react@19.0.0)
       '@types/react':
         specifier: catalog:react19
         version: 19.1.6
@@ -398,6 +410,12 @@ importers:
       '@menuplanner/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
+      csv-parse:
+        specifier: ^6.1.0
+        version: 6.1.0
+      csv-stringify:
+        specifier: ^6.6.0
+        version: 6.6.0
       dotenv-cli:
         specifier: ^8.0.0
         version: 8.0.0
@@ -1403,7 +1421,7 @@ packages:
     deprecated: 'Merged into tsx: https://tsx.is'
 
   '@esbuild/aix-ppc64@0.25.5':
-    resolution: {integrity: sha512-9o3TMmpmftmenuplannerpOdA5k/yDw8SfInyzWWTjYTFCX3kPSDJMROQTb8jg+h9Cnwnmm1vOzvxN7gIfB5V2ewpjtGA==}
+    resolution: {integrity: sha512-9o3TMmpmftaCMepOdA5k/yDw8SfInyzWWTjYTFCX3kPSDJMROQTb8jg+h9Cnwnmm1vOzvxN7gIfB5V2ewpjtGA==}
     engines: {node: '>=18'}
     cpu: [ppc64]
     os: [aix]
@@ -3893,6 +3911,12 @@ packages:
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
+  csv-parse@6.1.0:
+    resolution: {integrity: sha512-CEE+jwpgLn+MmtCpVcPtiCZpVtB6Z2OKPTr34pycYYoL7sxdOkXDdQ4lRiw6ioC0q6BLqhc6cKweCVvral8yhw==}
+
+  csv-stringify@6.6.0:
+    resolution: {integrity: sha512-YW32lKOmIBgbxtu3g5SaiqWNwa/9ISQt2EcgOq0+RAIFufFp9is6tqNnKahqE5kuKvrnYAzs28r+s6pXJR8Vcw==}
+
   damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
 
@@ -4057,6 +4081,10 @@ packages:
 
   dotenv@16.4.7:
     resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
+    engines: {node: '>=12'}
+
+  dotenv@17.2.1:
+    resolution: {integrity: sha512-kQhDYKZecqnM0fCnzI5eIv5L4cAe/iRI+HqMbO/hbRdTAeXDG+M9FjipUxNfbARuEg4iHIbhnhs78BCHNbSxEQ==}
     engines: {node: '>=12'}
 
   drizzle-kit@0.31.1:
@@ -7078,6 +7106,11 @@ packages:
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+
+  tsx@4.20.3:
+    resolution: {integrity: sha512-qjbnuR9Tr+FJOMBqJCW5ehvIo/buZq7vH7qD7JziU98h6l3qGy0a/yPFjwO+y0/T7GFpNgNAvEcPPVfyT8rrPQ==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
 
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
@@ -11404,6 +11437,10 @@ snapshots:
 
   csstype@3.1.3: {}
 
+  csv-parse@6.1.0: {}
+
+  csv-stringify@6.6.0: {}
+
   damerau-levenshtein@1.0.8: {}
 
   data-uri-to-buffer@6.0.2: {}
@@ -11540,6 +11577,8 @@ snapshots:
   dotenv@16.0.3: {}
 
   dotenv@16.4.7: {}
+
+  dotenv@17.2.1: {}
 
   drizzle-kit@0.31.1:
     dependencies:
@@ -14979,6 +15018,13 @@ snapshots:
   tslib@1.14.1: {}
 
   tslib@2.8.1: {}
+
+  tsx@4.20.3:
+    dependencies:
+      esbuild: 0.25.5
+      get-tsconfig: 4.10.1
+    optionalDependencies:
+      fsevents: 2.3.3
 
   tunnel-agent@0.6.0:
     dependencies:
