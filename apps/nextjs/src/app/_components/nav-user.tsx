@@ -8,6 +8,8 @@ import {
   IconUserCircle,
 } from "@tabler/icons-react"
 
+import { signOutAction } from "~/app/_actions/auth"
+
 import {
   Avatar,
   AvatarFallback,
@@ -98,7 +100,11 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={() => {
+                signOutAction();
+              }}
+            >
               <IconLogout />
               Log out
             </DropdownMenuItem>

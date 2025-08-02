@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   IconCamera,
   IconChartBar,
@@ -17,12 +17,12 @@ import {
   IconSearch,
   IconSettings,
   IconUsers,
-} from "@tabler/icons-react"
+} from "@tabler/icons-react";
 
-import { NavDocuments } from "~/app/_components/nav-documents"
-import { NavMain } from "~/app/_components/nav-main"
-import { NavSecondary } from "~/app/_components/nav-secondary"
-import { NavUser } from "~/app/_components/nav-user"
+import { NavDocuments } from "~/app/_components/nav-documents";
+import { NavMain } from "~/app/_components/nav-main";
+import { NavSecondary } from "~/app/_components/nav-secondary";
+import { NavUser } from "~/app/_components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -31,14 +31,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "~/app/_components/ui/sidebar"
+} from "~/app/_components/ui/sidebar";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Dashboard",
@@ -148,9 +143,26 @@ const data = {
       icon: IconFileWord,
     },
   ],
+};
+
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  session: {
+    user: {
+      id: string;
+      email: string;
+      name?: string | null;
+      image?: string | null;
+    };
+  };
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ session, ...props }: AppSidebarProps) {
+  const user = {
+    name: session.user.name ?? "User",
+    email: session.user.email,
+    avatar: session.user.image ?? "/avatars/shadcn.jpg",
+  };
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -162,7 +174,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-base font-semibold">Menuplanner</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -174,8 +186,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }

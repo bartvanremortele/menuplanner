@@ -1,8 +1,6 @@
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 
-import { getSession } from "~/auth/server";
 import { Button } from "~/ui/button";
 import {
   Card,
@@ -13,14 +11,9 @@ import {
 } from "~/ui/card";
 import { CreateRecipeForm } from "../../../_components/recipes";
 
-export default async function NewRecipePage() {
-  const session = await getSession();
-  if (!session) {
-    redirect("/login");
-  }
-
+export default function NewRecipePage() {
   return (
-    <div className="flex-1 space-y-4 p-8 pt-6">
+    <div className="flex-1 space-y-4 p-4 md:p-6">
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" asChild>
           <Link href="/dashboard">
