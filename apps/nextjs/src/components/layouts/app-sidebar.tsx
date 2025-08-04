@@ -2,29 +2,19 @@
 
 import * as React from "react";
 import {
-  IconCamera,
-  IconChartBar,
   IconDashboard,
   IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
   IconInnerShadowTop,
-  IconListDetails,
-  IconReport,
-  IconSearch,
   IconSettings,
-  IconUsers,
   IconChefHat,
   IconCarrot,
 } from "@tabler/icons-react";
 
-import { NavDocuments } from "@/components/layouts/nav-documents";
 import { NavMain } from "@/components/layouts/nav-main";
 import { NavSecondary } from "@/components/layouts/nav-secondary";
 import { NavUser } from "@/components/layouts/nav-user";
+import { NavCollapsible } from "@/components/layouts/nav-collapsible";
+import { NavAction } from "@/components/layouts/nav-action";
 import {
   Sidebar,
   SidebarContent,
@@ -33,6 +23,8 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarGroup,
+  SidebarGroupContent,
 } from "@/components/ui/sidebar";
 
 const data = {
@@ -42,6 +34,8 @@ const data = {
       url: "/dashboard",
       icon: IconDashboard,
     },
+  ],
+  masterData: [
     {
       title: "Recipes",
       url: "/recipes",
@@ -52,107 +46,12 @@ const data = {
       url: "/ingredients",
       icon: IconCarrot,
     },
-    {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
   ],
   navSecondary: [
     {
       title: "Settings",
-      url: "#",
+      url: "/settings",
       icon: IconSettings,
-    },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: IconHelp,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: IconSearch,
-    },
-  ],
-  documents: [
-    {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
     },
   ],
 };
@@ -194,8 +93,22 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <NavCollapsible 
+                title="Master Data" 
+                items={data.masterData}
+                icon={IconDatabase}
+                defaultOpen={true}
+              />
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <NavSecondary items={data.navSecondary} />
+        <div className="mt-auto">
+          <NavAction />
+        </div>
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />
