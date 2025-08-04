@@ -8,7 +8,9 @@ import {
 
 import type { RouterOutputs } from "@menuplanner/api";
 import { CreateRecipeSchema } from "@menuplanner/db";
+
 import { cn } from "~/lib/utils";
+import { useTRPC } from "~/trpc/react";
 import { Button } from "~/ui/button";
 import {
   Form,
@@ -22,8 +24,6 @@ import {
 import { Input } from "~/ui/input";
 import { Textarea } from "~/ui/textarea";
 import { toast } from "~/ui/toast";
-
-import { useTRPC } from "~/trpc/react";
 
 export function CreateRecipeForm() {
   const trpc = useTRPC();
@@ -164,13 +164,13 @@ export function RecipeCard(props: {
   };
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg bg-muted p-6">
+    <div className="bg-muted flex flex-col gap-4 rounded-lg p-6">
       <div className="flex flex-row items-start justify-between">
         <div className="flex-grow">
-          <h2 className="text-2xl font-bold text-primary">
+          <h2 className="text-primary text-2xl font-bold">
             {props.recipe.name}
           </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="text-muted-foreground mt-1 text-sm">
             Created{" "}
             {new Date(props.recipe.createdAt).toLocaleDateString("en-US", {
               year: "numeric",
@@ -182,14 +182,14 @@ export function RecipeCard(props: {
         <Button
           variant="ghost"
           size="sm"
-          className="text-sm font-bold uppercase text-destructive hover:bg-destructive/10"
+          className="text-destructive hover:bg-destructive/10 text-sm font-bold uppercase"
           onClick={() => deleteRecipe.mutate(props.recipe.id)}
         >
           Delete
         </Button>
       </div>
       <div className="prose prose-sm dark:prose-invert max-w-none">
-        <p className="whitespace-pre-wrap text-sm leading-relaxed">
+        <p className="text-sm leading-relaxed whitespace-pre-wrap">
           {formatDescription(props.recipe.description)}
         </p>
       </div>
@@ -200,12 +200,12 @@ export function RecipeCard(props: {
 export function RecipeCardSkeleton(props: { pulse?: boolean }) {
   const { pulse = true } = props;
   return (
-    <div className="flex flex-col gap-4 rounded-lg bg-muted p-6">
+    <div className="bg-muted flex flex-col gap-4 rounded-lg p-6">
       <div className="flex flex-row items-start justify-between">
         <div className="flex-grow">
           <h2
             className={cn(
-              "w-1/3 rounded bg-primary text-2xl font-bold",
+              "bg-primary w-1/3 rounded text-2xl font-bold",
               pulse && "animate-pulse",
             )}
           >
@@ -213,7 +213,7 @@ export function RecipeCardSkeleton(props: { pulse?: boolean }) {
           </h2>
           <p
             className={cn(
-              "mt-1 w-1/4 rounded bg-muted-foreground text-sm",
+              "bg-muted-foreground mt-1 w-1/4 rounded text-sm",
               pulse && "animate-pulse",
             )}
           >

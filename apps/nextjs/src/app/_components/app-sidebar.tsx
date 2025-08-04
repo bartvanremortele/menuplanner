@@ -17,6 +17,7 @@ import {
   IconSearch,
   IconSettings,
   IconUsers,
+  IconChefHat,
 } from "@tabler/icons-react";
 
 import { NavDocuments } from "~/app/_components/nav-documents";
@@ -37,8 +38,13 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: IconDashboard,
+    },
+    {
+      title: "Recipes",
+      url: "/recipes",
+      icon: IconChefHat,
     },
     {
       title: "Lifecycle",
