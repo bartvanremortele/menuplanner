@@ -1,6 +1,6 @@
 import { IconPlus } from "@tabler/icons-react";
-import { Button } from "~/ui/button";
-import { IngredientsTable } from "~/app/_components/ingredients-table";
+import { Button } from "@/components/ui/button";
+import { IngredientsTable } from "@/features/ingredients/components/ingredients-table";
 
 export default function IngredientsPage() {
   return (

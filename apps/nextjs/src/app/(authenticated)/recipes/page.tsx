@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { IconPlus } from "@tabler/icons-react";
-import { Button } from "~/ui/button";
-import { RecipesTable } from "~/app/_components/recipes-table";
+import { Button } from "@/components/ui/button";
+import { RecipesTable } from "@/features/recipes/components/recipes-table";
 
 function RecipesTableSkeleton() {
   return (

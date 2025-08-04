@@ -170,6 +170,10 @@ export const CreateIngredientSchema = createInsertSchema(Ingredient, {
   name: z.string().max(256),
 });
 
+export const UpdateIngredientSchema = createUpdateSchema(Ingredient).extend({
+  id: z.number(),
+});
+
 export const CreateUnitSchema = createInsertSchema(Unit, {
   abbr: z.string().max(10),
   name: z.string().max(256),

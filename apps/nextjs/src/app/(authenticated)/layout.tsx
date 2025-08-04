@@ -1,11 +1,12 @@
 import { redirect } from "next/navigation";
-import { getSession } from "~/auth/server";
-import { AppSidebar } from "~/app/_components/app-sidebar";
-import { SiteHeader } from "~/app/_components/site-header";
+import { getSession } from "@/auth/server";
+import { AppSidebar } from "@/components/layouts/app-sidebar";
+import { SiteHeader } from "@/components/layouts/site-header";
 import {
   SidebarInset,
   SidebarProvider,
-} from "~/app/_components/ui/sidebar";
+} from "@/components/ui/sidebar";
+import { paths } from "@/config/paths";
 
 export default async function AuthenticatedLayout({
   children,
@@ -15,7 +16,7 @@ export default async function AuthenticatedLayout({
   const session = await getSession();
 
   if (!session) {
-    redirect("/login");
+    redirect(paths.auth.login.getHref());
   }
 
   return (

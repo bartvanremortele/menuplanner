@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 
-import { Button } from "~/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "~/ui/card";
+} from "@/components/ui/card";
 import { CreateRecipeForm } from "../../../_components/recipes";
 
 export default function NewRecipePage() {

@@ -20,7 +20,7 @@ export const recipeRouter = {
   }),
 
   byId: publicProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.union([z.string(), z.number()]).transform(val => typeof val === 'string' ? parseInt(val, 10) : val) }))
     .query(({ ctx, input }) => {
       return ctx.db.query.Recipe.findFirst({
         where: eq(Recipe.id, input.id),
@@ -43,7 +43,9 @@ export const recipeRouter = {
       return ctx.db.update(Recipe).set(data).where(eq(Recipe.id, id));
     }),
 
-  delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(Recipe).where(eq(Recipe.id, input));
-  }),
+  delete: protectedProcedure
+    .input(z.union([z.string(), z.number()]).transform(val => typeof val === 'string' ? parseInt(val, 10) : val))
+    .mutation(({ ctx, input }) => {
+      return ctx.db.delete(Recipe).where(eq(Recipe.id, input));
+    }),
 } satisfies TRPCRouterRecord;

@@ -1,12 +1,13 @@
 import { redirect } from "next/navigation";
-import { LoginForm } from "~/app/_components/login-form";
-import { getSession } from "~/auth/server";
+import { LoginForm } from "@/features/auth/components/login-form";
+import { getSession } from "@/auth/server";
+import { paths } from "@/config/paths";
 
 export default async function Page() {
   const session = await getSession();
   
   if (session) {
-    redirect("/dashboard");
+    redirect(paths.app.dashboard.getHref());
   }
   
   return (

@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import { cn } from "~/lib/utils";
-import { TRPCReactProvider } from "~/trpc/react";
-import { ThemeProvider } from "~/ui/theme";
-import { Toaster } from "~/ui/toast";
+import { cn } from "@/lib/utils";
+import { TRPCReactProvider } from "@/trpc/react";
+import { ThemeProvider } from "@/components/ui/theme";
+import { Toaster } from "@/components/ui/toast";
 
-import "~/app/globals.css";
+import "@/app/globals.css";
 
-import { env } from "~/env";
+import { env } from "@/config/env";
 
 export const metadata: Metadata = {
   metadataBase: new URL(

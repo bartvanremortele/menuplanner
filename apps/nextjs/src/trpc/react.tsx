@@ -13,7 +13,7 @@ import SuperJSON from "superjson";
 
 import type { AppRouter } from "@menuplanner/api";
 
-import { env } from "~/env";
+import { env } from "@/config/env";
 import { createQueryClient } from "./query-client";
 
 let clientQueryClientSingleton: QueryClient | undefined;

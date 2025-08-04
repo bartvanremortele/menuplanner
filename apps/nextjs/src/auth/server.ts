@@ -4,7 +4,7 @@ import { initAuth } from "@menuplanner/auth";
 import { headers } from "next/headers";
 import { cache } from "react";
 
-import { env } from "~/env";
+import { env } from "@/config/env";
 
 const baseUrl =
 	env.VERCEL_ENV === "production"

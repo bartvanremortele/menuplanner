@@ -1,7 +1,7 @@
-import { ChartAreaInteractive } from "~/app/_components/chart-area-interactive";
-import { DataTable } from "~/app/_components/data-table";
-import { SectionCards } from "~/app/_components/section-cards";
-import { HydrateClient, prefetch, trpc } from "~/trpc/server";
+import { DataTable } from "@/components/common/data-table";
+import { ChartAreaInteractive } from "@/features/dashboard/components/chart-area-interactive";
+import { SectionCards } from "@/features/dashboard/components/section-cards";
+import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 
 import data from "./data.json";
 
