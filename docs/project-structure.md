@@ -64,15 +64,32 @@ Here's how the recipes feature might look in practice:
 src/features/recipes
 |
 +-- api
-|   +-- use-recipes.ts      # tRPC hooks for recipes
-|   +-- use-recipe.ts       # tRPC hook for single recipe
-|   +-- use-create-recipe.ts
+|   +-- use-recipes.ts      # Combined hooks for all recipe operations
 |
 +-- components
-|   +-- recipe-list.tsx
-|   +-- recipe-card.tsx
-|   +-- recipe-form.tsx
-|   +-- recipe-detail.tsx
+|   +-- recipe-list/        # List view components
+|   |   +-- recipe-list.tsx
+|   |   +-- recipe-card.tsx
+|   |   +-- recipe-table.tsx
+|   |   +-- index.ts
+|   |
+|   +-- recipe-view/        # Detail view components
+|   |   +-- recipe-view.tsx
+|   |   +-- index.ts
+|   |
+|   +-- recipe-form/        # Shared form components
+|   |   +-- recipe-form.tsx
+|   |   +-- index.ts
+|   |
+|   +-- recipe-create/      # Create functionality
+|   |   +-- recipe-create.tsx
+|   |   +-- index.ts
+|   |
+|   +-- recipe-update/      # Update functionality
+|   |   +-- recipe-update.tsx
+|   |   +-- index.ts
+|   |
+|   +-- index.ts           # Barrel exports for all components
 |
 +-- types
 |   +-- index.ts           # recipe-related types
@@ -80,6 +97,17 @@ src/features/recipes
 +-- utils
 |   +-- recipe-helpers.ts  # recipe-specific utilities
 ```
+
+### Component Organization Pattern
+
+The recipe feature demonstrates our recommended component organization pattern:
+
+1. **Grouped by Functionality**: Components are organized into folders based on their purpose (list, view, form, create, update)
+2. **Clear Naming**: Components use descriptive names that indicate their purpose (e.g., `recipe-list`, `recipe-view`)
+3. **Barrel Exports**: Each folder has an `index.ts` file for cleaner imports
+4. **Separation of Concerns**: 
+   - Pure UI components (e.g., `recipe-form`) are separated from business logic
+   - Wrapper components (e.g., `recipe-create`, `recipe-update`) handle data fetching and mutations
 
 ## Adapting to Next.js App Router
 
@@ -99,50 +127,111 @@ src
 +-- features
     +-- recipes
         +-- components
-            +-- recipes-page.tsx   # actual page component
-            +-- recipe-detail-page.tsx
-            +-- create-recipe-page.tsx
+            +-- recipe-list/
+                +-- recipe-table.tsx   # used in the list page
+            +-- recipe-view/
+                +-- recipe-view.tsx    # used in the detail page
+            +-- recipe-create/
+                +-- recipe-create.tsx  # used in the new page
+            +-- recipe-update/
+                +-- recipe-update.tsx  # used in the edit page
 ```
 
 The page files in the app directory should be thin wrappers that import from features:
 
 ```tsx
 // app/(authenticated)/recipes/page.tsx
-import { RecipesPage } from '@/features/recipes/components/recipes-page';
+import { RecipeTable } from '@/features/recipes/components/recipe-list';
 
 export default function Page() {
-  return <RecipesPage />;
+  return (
+    <div className="flex-1 space-y-4 p-4 md:p-6">
+      <RecipeTable />
+    </div>
+  );
+}
+
+// app/(authenticated)/recipes/[id]/page.tsx
+import { RecipeView } from '@/features/recipes/components/recipe-view';
+
+export default function Page({ params }: { params: { id: string } }) {
+  return <RecipeView recipeId={params.id} />;
 }
 ```
 
 ## API Layer with tRPC
 
-Since you're using tRPC in a monorepo, your API calls are type-safe across packages. In the features, create hooks that use the tRPC client:
+Since you're using tRPC in a monorepo, your API calls are type-safe across packages. In the features, we recommend consolidating related hooks in a single file for better maintainability:
 
 ```sh
 src/features/recipes/api
 |
-+-- use-recipes.ts        # Lists recipes
-+-- use-recipe.ts         # Get single recipe
-+-- use-create-recipe.ts  # Create recipe mutation
-+-- use-update-recipe.ts  # Update recipe mutation
-+-- use-delete-recipe.ts  # Delete recipe mutation
++-- use-recipes.ts        # All recipe-related hooks in one file
 ```
 
 Example:
 ```tsx
 // src/features/recipes/api/use-recipes.ts
 import { useTRPC } from '@/trpc/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-export function useRecipes() {
-  return useTRPC().recipe.all.useQuery();
+// Query hooks
+export function useGetRecipes() {
+  const trpc = useTRPC();
+  return useSuspenseQuery(trpc.recipe.all.queryOptions());
 }
 
-export function useRecipesInfinite() {
-  return useTRPC().recipe.infinite.useInfiniteQuery({
-    limit: 10,
-  });
+export function useGetRecipe(id: string) {
+  const trpc = useTRPC();
+  return useSuspenseQuery(trpc.recipe.byId.queryOptions({ id: parseInt(id) }));
 }
+
+// Mutation hooks
+export function useCreateRecipe() {
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+  
+  return useMutation(
+    trpc.recipe.create.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries(trpc.recipe.pathFilter());
+        toast.success("Recipe created successfully");
+      },
+    }),
+  );
+}
+
+export function useUpdateRecipe() {
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+  
+  return useMutation(
+    trpc.recipe.update.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries(trpc.recipe.pathFilter());
+        toast.success("Recipe updated successfully");
+      },
+    }),
+  );
+}
+
+export function useDeleteRecipe() {
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+  
+  return useMutation(
+    trpc.recipe.delete.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries(trpc.recipe.pathFilter());
+        toast.success("Recipe deleted successfully");
+      },
+    }),
+  );
+}
+
+// Export types for convenience
+export type Recipe = RouterOutputs['recipe']['all'][number];
+export type RecipeDetail = RouterOutputs['recipe']['byId'];
 ```
 
 ## Import Path Configuration
@@ -251,9 +340,22 @@ With Next.js App Router, be mindful of the server/client boundary:
 ```sh
 src/features/recipes/components
 |
-+-- recipe-list.tsx          # Server Component (default)
-+-- recipe-list-client.tsx   # Client Component (if needed)
-+-- recipe-form.tsx          # Client Component (uses hooks)
++-- recipe-list/
+|   +-- recipe-list.tsx      # Client Component (uses suspense)
+|   +-- recipe-card.tsx      # Client Component (uses hooks)
+|   +-- recipe-table.tsx     # Client Component (interactive)
+|
++-- recipe-view/
+|   +-- recipe-view.tsx      # Client Component (uses hooks)
+|
++-- recipe-form/
+|   +-- recipe-form.tsx      # Client Component (form state)
+|
++-- recipe-create/
+|   +-- recipe-create.tsx    # Client Component (mutations)
+|
++-- recipe-update/
+|   +-- recipe-update.tsx    # Client Component (mutations)
 ```
 
 Mark client components explicitly:
@@ -262,6 +364,13 @@ Mark client components explicitly:
 
 // Component that needs client-side features
 ```
+
+### Key Patterns:
+
+1. **Data Fetching**: Use hooks with suspense boundaries in page components
+2. **Forms**: Always client components due to state management
+3. **Interactive Elements**: Tables with sorting/filtering are client components
+4. **Pure Display**: Can be server components if no interactivity is needed
 
 ## Shared Components
 

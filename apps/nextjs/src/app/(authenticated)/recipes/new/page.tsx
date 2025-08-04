@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CreateRecipeForm } from "@/features/recipes/components/recipes";
+import { RecipeCreate } from "@/features/recipes/components/recipe-create";
 
 export default function NewRecipePage() {
   return (
@@ -37,7 +37,7 @@ export default function NewRecipePage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <CreateRecipeForm />
+          <RecipeCreate />
         </CardContent>
       </Card>
     </div>

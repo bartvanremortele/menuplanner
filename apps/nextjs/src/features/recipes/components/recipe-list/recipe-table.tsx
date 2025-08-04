@@ -17,7 +17,7 @@ import { useGetRecipes, useDeleteRecipe, type Recipe } from "@/features/recipes/
 import { paths } from "@/config/paths";
 import { DeleteDialog } from "@/components/ui/delete-dialog";
 
-export function RecipesTable() {
+export function RecipeTable() {
   const router = useRouter();
   const { data: recipes } = useGetRecipes();
   const deleteMutation = useDeleteRecipe();
@@ -57,7 +57,7 @@ export function RecipesTable() {
     createActionsColumn<Recipe>([
       {
         label: "Edit",
-        onClick: (recipe) => router.push(paths.app.recipes.edit.getHref(recipe.id)),
+        onClick: (recipe) => router.push(paths.app.recipes.edit.getHref(recipe.id.toString())),
       },
       {
         label: "Delete",
@@ -75,7 +75,7 @@ export function RecipesTable() {
         columns={columns}
         data={recipes}
         searchKey="name"
-        onRowClick={(row) => router.push(paths.app.recipes.detail.getHref(row.original.id))}
+        onRowClick={(row) => router.push(paths.app.recipes.detail.getHref(row.original.id.toString()))}
       />
       
       <DeleteDialog

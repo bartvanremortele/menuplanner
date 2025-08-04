@@ -47,14 +47,21 @@ export const recipeRouter = {
       return ctx.db.insert(Recipe).values({
         ...input,
         createdByUserId: ctx.session.user.id,
-      });
+      }).returning();
     }),
 
   update: protectedProcedure
     .input(UpdateRecipeSchema)
     .mutation(({ ctx, input }) => {
       const { id, ...data } = input;
-      return ctx.db.update(Recipe).set(data).where(eq(Recipe.id, id));
+      return ctx.db
+        .update(Recipe)
+        .set({
+          ...data,
+          updatedAt: new Date(),
+        })
+        .where(eq(Recipe.id, id))
+        .returning();
     }),
 
   delete: protectedProcedure

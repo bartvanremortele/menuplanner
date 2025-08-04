@@ -5,15 +5,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { DetailHeader } from "@/components/ui/detail-header";
 import { DL } from "@/components/ui/description-list";
 
-interface RecipeDetailProps {
+interface RecipeViewProps {
   recipeId: string;
 }
 
-export function RecipeDetail({ recipeId }: RecipeDetailProps) {
+export function RecipeView({ recipeId }: RecipeViewProps) {
   const { data: recipe, isLoading } = useGetRecipe(recipeId);
 
   if (isLoading) {
-    return <RecipeDetailSkeleton />;
+    return <RecipeViewSkeleton />;
   }
 
   if (!recipe) {
@@ -86,7 +86,7 @@ export function RecipeDetail({ recipeId }: RecipeDetailProps) {
   );
 }
 
-function RecipeDetailSkeleton() {
+function RecipeViewSkeleton() {
   return (
     <div className="max-w-4xl">
       <div className="px-4 sm:px-0">

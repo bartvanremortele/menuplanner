@@ -1,10 +1,14 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { IconArrowLeft, IconEdit } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
-import { RecipeDetail } from "@/features/recipes/components/recipe-detail";
+import { Edit } from "lucide-react";
+import { RecipeView } from "@/features/recipes/components/recipe-view";
 import { Skeleton } from "@/components/ui/skeleton";
 import { paths } from "@/config/paths";
+import { 
+  PageHeader, 
+  PageHeaderActions, 
+  PageHeaderAction 
+} from "@/components/layouts/page-header";
 
 export default function RecipeDetailPage({
   params,
@@ -13,32 +17,31 @@ export default function RecipeDetailPage({
 }) {
   return (
     <div className="flex flex-1 flex-col">
-      <div className="flex items-center justify-between p-4 lg:p-6">
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" asChild>
-            <Link href={paths.app.recipes.getHref()}>
-              <IconArrowLeft className="h-4 w-4" />
-              <span className="sr-only">Back to recipes</span>
-            </Link>
-          </Button>
-          <div>
-            <h1 className="text-2xl font-semibold">Recipe Details</h1>
-            <p className="text-sm text-muted-foreground">
-              View and manage recipe information
-            </p>
-          </div>
-        </div>
-        <Button asChild>
-          <Link href={paths.app.recipes.edit.getHref(params.id)}>
-            <IconEdit className="mr-2 h-4 w-4" />
-            Edit Recipe
-          </Link>
-        </Button>
+      <div className="p-4 lg:p-6">
+        <PageHeader
+          title="Recipe Details"
+          subtitle="View and manage recipe information"
+          backButton={{
+            href: paths.app.recipes.getHref(),
+            label: "Back to recipes"
+          }}
+          actions={
+            <PageHeaderActions>
+              <PageHeaderAction 
+                label="Edit Recipe" 
+                icon={<Edit className="mr-2 size-4" />}
+                asChild
+              >
+                <Link href={paths.app.recipes.edit.getHref(params.id)} />
+              </PageHeaderAction>
+            </PageHeaderActions>
+          }
+        />
       </div>
 
       <div className="flex-1 p-4 lg:p-6">
         <Suspense fallback={<RecipeDetailSkeleton />}>
-          <RecipeDetail recipeId={params.id} />
+          <RecipeView recipeId={params.id} />
         </Suspense>
       </div>
     </div>
