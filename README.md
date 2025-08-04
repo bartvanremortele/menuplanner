@@ -57,6 +57,24 @@ tooling
 
 > In this template, we use `@menuplanner` as a placeholder for package names. As a user, you might want to replace it with your own organization or project name. You can use find-and-replace to change all the instances of `@menuplanner` to something like `@my-company` or `@project-name`.
 
+## Documentation
+
+This project follows the architectural patterns and best practices from [Bulletproof React](https://github.com/alan2207/bulletproof-react), adapted for our monorepo structure and tech stack.
+
+### Architecture & Best Practices:
+
+- [💻 Application Overview](docs/application-overview.md)
+- [⚙️ Project Standards](docs/project-standards.md)
+- [🗄️ Project Structure](docs/project-structure.md)
+- [🧱 Components And Styling](docs/components-and-styling.md)
+- [📡 API Layer](docs/api-layer.md)
+- [🗃️ State Management](docs/state-management.md)
+- [🧪 Testing](docs/testing.md)
+- [⚠️ Error Handling](docs/error-handling.md)
+- [🔐 Security](docs/security.md)
+- [🚄 Performance](docs/performance.md)
+- [🌐 Deployment](docs/deployment.md)
+
 ## Quick Start
 
 > **Note**
