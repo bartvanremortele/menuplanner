@@ -16,6 +16,13 @@ export const recipeRouter = {
     return ctx.db.query.Recipe.findMany({
       orderBy: desc(Recipe.createdAt),
       limit: 20,
+      with: {
+        labels: {
+          with: {
+            label: true,
+          },
+        },
+      },
     });
   }),
 
@@ -24,6 +31,13 @@ export const recipeRouter = {
     .query(({ ctx, input }) => {
       return ctx.db.query.Recipe.findFirst({
         where: eq(Recipe.id, input.id),
+        with: {
+          labels: {
+            with: {
+              label: true,
+            },
+          },
+        },
       });
     }),
 

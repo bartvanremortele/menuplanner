@@ -2,10 +2,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/auth/server";
 import { AppSidebar } from "@/components/layouts/app-sidebar";
 import { SiteHeader } from "@/components/layouts/site-header";
-import {
-  SidebarInset,
-  SidebarProvider,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { paths } from "@/config/paths";
 
 export default async function AuthenticatedLayout({
@@ -30,10 +27,8 @@ export default async function AuthenticatedLayout({
     >
       <AppSidebar session={session} />
       <SidebarInset>
-        <SiteHeader />
-        <div className="flex flex-1 flex-col">
-          {children}
-        </div>
+        {/* <SiteHeader /> */}
+        <div className="flex flex-1 flex-col">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

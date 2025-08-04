@@ -88,7 +88,10 @@ export function createActionsColumn<T>(
             {actions.map((action, index) => (
               <DropdownMenuItem
                 key={index}
-                onClick={() => action.onClick(data)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  action.onClick(data);
+                }}
                 className={
                   action.variant === "destructive"
                     ? "text-destructive focus:text-destructive"
