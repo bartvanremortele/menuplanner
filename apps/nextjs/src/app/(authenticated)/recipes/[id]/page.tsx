@@ -10,11 +10,13 @@ import {
   PageHeaderAction 
 } from "@/components/layouts/page-header";
 
-export default function RecipeDetailPage({
+export default async function RecipeDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
+  
   return (
     <div className="flex flex-1 flex-col">
       <div className="p-4 lg:p-6">
@@ -32,7 +34,7 @@ export default function RecipeDetailPage({
                 icon={<Edit className="mr-2 size-4" />}
                 asChild
               >
-                <Link href={paths.app.recipes.edit.getHref(params.id)} />
+                <Link href={paths.app.recipes.edit.getHref(id)} />
               </PageHeaderAction>
             </PageHeaderActions>
           }
@@ -41,7 +43,7 @@ export default function RecipeDetailPage({
 
       <div className="flex-1 p-4 lg:p-6">
         <Suspense fallback={<RecipeDetailSkeleton />}>
-          <RecipeView recipeId={params.id} />
+          <RecipeView recipeId={id} />
         </Suspense>
       </div>
     </div>

@@ -43,7 +43,7 @@ export function PageHeaderAction({
       <Button variant={variant} asChild>
         {React.cloneElement(childElement, {
           children: content
-        })}
+        } as any)}
       </Button>
     );
   }

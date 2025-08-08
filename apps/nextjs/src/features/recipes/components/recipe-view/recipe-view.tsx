@@ -4,6 +4,8 @@ import { useGetRecipe } from "@/features/recipes/api/use-recipes";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DetailHeader } from "@/components/ui/detail-header";
 import { DL } from "@/components/ui/description-list";
+import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/lib/supabase";
 
 interface RecipeViewProps {
   recipeId: string;
@@ -31,22 +33,40 @@ export function RecipeView({ recipeId }: RecipeViewProps) {
         subtitle="Recipe details and information"
       />
       
+      {recipe.imageKey && (
+        <div className="mt-6">
+          <img 
+            src={
+              recipe.imageKey.startsWith('http') || recipe.imageKey.startsWith('data:')
+                ? recipe.imageKey
+                : supabase.storage.from('recipe-images').getPublicUrl(recipe.imageKey).data.publicUrl
+            }
+            alt={recipe.name}
+            className="w-full h-64 object-cover rounded-lg"
+          />
+        </div>
+      )}
+
       <div className="mt-6 border-t">
         <DL>
           <DL.Item term="Description">
             {recipe.description || "No description provided"}
           </DL.Item>
 
+          {recipe.labels && recipe.labels.length > 0 && (
+            <DL.Item term="Labels">
+              <div className="flex gap-2 flex-wrap">
+                {recipe.labels.map((labelConnection) => (
+                  <Badge key={labelConnection.label.id} variant="secondary">
+                    {labelConnection.label.name}
+                  </Badge>
+                ))}
+              </div>
+            </DL.Item>
+          )}
+
           <DL.Item term="Created By">
             User ID: {recipe.createdByUserId}
-          </DL.Item>
-
-          <DL.Item term="Recipe Image">
-            {recipe.imageKey ? (
-              <span className="text-sm">Image uploaded</span>
-            ) : (
-              <span className="text-muted-foreground">No image uploaded</span>
-            )}
           </DL.Item>
 
           <DL.Item term="Created">
@@ -73,15 +93,24 @@ export function RecipeView({ recipeId }: RecipeViewProps) {
         </DL>
       </div>
 
-      {/* Ingredients Section - To be added when recipe ingredients are loaded */}
-      <div className="mt-8 border-t pt-6">
-        <h4 className="text-sm font-medium leading-6 text-foreground mb-4">
-          Ingredients
-        </h4>
-        <p className="text-sm text-muted-foreground">
-          Ingredients list will be displayed here once the recipe-ingredient relationships are set up.
-        </p>
-      </div>
+      {/* Ingredients Section */}
+      {recipe.ingredients && recipe.ingredients.length > 0 && (
+        <div className="mt-8 border-t pt-6">
+          <h4 className="text-sm font-medium leading-6 text-foreground mb-4">
+            Ingredients
+          </h4>
+          <ul className="divide-y divide-border">
+            {recipe.ingredients.map((item) => (
+              <li key={item.ingredient.id} className="py-3 flex justify-between">
+                <span className="text-sm">{item.ingredient.name}</span>
+                <span className="text-sm text-muted-foreground">
+                  {item.amount} {item.unit.name}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

@@ -8,6 +8,13 @@
       "when": 1754118493910,
       "tag": "0000_orange_omega_red",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1754327748706,
+      "tag": "0001_uuid_migration_safe",
+      "breakpoints": true
     }
   ]
 }

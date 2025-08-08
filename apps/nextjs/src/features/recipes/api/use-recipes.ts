@@ -1,9 +1,14 @@
-import { useSuspenseQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useSuspenseQuery, useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTRPC } from "@/trpc/react";
 import type { RouterOutputs } from "@menuplanner/api";
+import { z } from "zod/v4";
+import { UpdateRecipeInputSchema } from "@menuplanner/validators";
 
 export type Recipe = RouterOutputs["recipe"]["all"][number];
+export type Ingredient = RouterOutputs["ingredient"]["all"][number];
+export type Label = RouterOutputs["label"]["all"][number];
+export type Unit = RouterOutputs["unit"]["all"][number];
 
 export function useGetRecipes() {
   const trpc = useTRPC();
@@ -26,7 +31,9 @@ export function useCreateRecipe() {
   return useMutation(
     trpc.recipe.create.mutationOptions({
       onSuccess: async () => {
-        await queryClient.invalidateQueries({ queryKey: ["recipe"] });
+        await queryClient.invalidateQueries(
+          trpc.recipe.all.queryFilter()
+        );
         toast.success("Recipe created successfully");
       },
       onError: (error) => {
@@ -42,8 +49,14 @@ export function useUpdateRecipe() {
   
   return useMutation(
     trpc.recipe.update.mutationOptions({
-      onSuccess: async (_, variables) => {
-        await queryClient.invalidateQueries({ queryKey: ["recipe"] });
+      onSuccess: async (data, variables) => {
+        // Use tRPC's queryKey method - id is now a UUID string
+        await queryClient.invalidateQueries({ 
+          queryKey: trpc.recipe.all.queryKey() 
+        });
+        await queryClient.invalidateQueries({ 
+          queryKey: trpc.recipe.byId.queryKey({ id: variables.id }) 
+        });
         toast.success("Recipe updated successfully");
       },
       onError: (error) => {
@@ -60,7 +73,9 @@ export function useDeleteRecipe() {
   return useMutation(
     trpc.recipe.delete.mutationOptions({
       onSuccess: async () => {
-        await queryClient.invalidateQueries({ queryKey: ["recipe"] });
+        await queryClient.invalidateQueries(
+          trpc.recipe.all.queryFilter()
+        );
         toast.success("Recipe deleted successfully");
       },
       onError: (error) => {
@@ -68,4 +83,56 @@ export function useDeleteRecipe() {
       },
     })
   );
+}
+
+// Ingredient hooks
+export function useSearchIngredients(query: string) {
+  const trpc = useTRPC();
+  return useQuery(
+    trpc.ingredient.search.queryOptions({ query })
+  );
+}
+
+export function useGetIngredients() {
+  const trpc = useTRPC();
+  return useQuery(trpc.ingredient.all.queryOptions());
+}
+
+export function useGetIngredient(id: string | undefined) {
+  const trpc = useTRPC();
+  return useQuery(
+    trpc.ingredient.byId.queryOptions({ id: id! }, {
+      enabled: !!id,
+    })
+  );
+}
+
+export function useGetIngredientsByIds(ids: string[]) {
+  const trpc = useTRPC();
+  return useQuery(
+    trpc.ingredient.byIds.queryOptions({ ids }, {
+      enabled: ids.length > 0,
+    })
+  );
+}
+
+// Label hooks
+export function useGetLabels() {
+  const trpc = useTRPC();
+  return useQuery(trpc.label.all.queryOptions());
+}
+
+export function useSearchLabels(query: string) {
+  const trpc = useTRPC();
+  return useQuery(
+    trpc.label.search.queryOptions({ query }, {
+      enabled: query !== undefined,
+    })
+  );
+}
+
+// Unit hooks
+export function useGetUnits() {
+  const trpc = useTRPC();
+  return useQuery(trpc.unit.all.queryOptions());
 }

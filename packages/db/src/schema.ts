@@ -6,9 +6,12 @@ import { z } from "zod/v4";
 // Import user from auth-schema for references
 import { user } from "./auth-schema";
 
+// UUID generation using PostgreSQL's uuid-ossp extension
+const uuid = sql`uuid_generate_v4()`;
+
 // Recipe table
 export const Recipe = pgTable("recipe", (t) => ({
-  id: t.integer().notNull().primaryKey().generatedAlwaysAsIdentity(),
+  id: t.text().notNull().primaryKey().default(uuid),
   name: t.varchar({ length: 256 }).notNull().unique(),
   description: t.text().notNull(),
   imageKey: t.varchar({ length: 256 }),
@@ -24,7 +27,7 @@ export const Recipe = pgTable("recipe", (t) => ({
 
 // Label table
 export const Label = pgTable("label", (t) => ({
-  id: t.integer().notNull().primaryKey().generatedAlwaysAsIdentity(),
+  id: t.text().notNull().primaryKey().default(uuid),
   name: t.varchar({ length: 256 }).notNull().unique(),
   createdAt: t.timestamp().defaultNow().notNull(),
   updatedAt: t
@@ -37,11 +40,11 @@ export const RecipeLabelConnection = pgTable(
   "recipe_label_connection",
   (t) => ({
     recipeId: t
-      .integer()
+      .text()
       .notNull()
       .references(() => Recipe.id, { onDelete: "cascade" }),
     labelId: t
-      .integer()
+      .text()
       .notNull()
       .references(() => Label.id, { onDelete: "cascade" }),
     assignedAt: t.timestamp().defaultNow().notNull(),
@@ -61,7 +64,7 @@ export const WeekDayConfig = pgTable(
   (t) => ({
     weekDay: t.integer().notNull(),
     labelId: t
-      .integer()
+      .text()
       .notNull()
       .references(() => Label.id),
     userId: t
@@ -82,14 +85,14 @@ export const DayPlan = pgTable(
   (t) => ({
     day: t.timestamp().notNull(),
     recipeId: t
-      .integer()
+      .text()
       .notNull()
       .references(() => Recipe.id, { onDelete: "cascade" }),
     userId: t
       .text()
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    labelId: t.integer().references(() => Label.id, { onDelete: "cascade" }),
+    labelId: t.text().references(() => Label.id, { onDelete: "cascade" }),
   }),
   (table) => ({
     pk: primaryKey({
@@ -100,7 +103,7 @@ export const DayPlan = pgTable(
 
 // Ingredient table
 export const Ingredient = pgTable("ingredient", (t) => ({
-  id: t.integer().notNull().primaryKey().generatedAlwaysAsIdentity(),
+  id: t.text().notNull().primaryKey().default(uuid),
   name: t.varchar({ length: 256 }).notNull(),
   url: t.text(),
   kj: t.real(),
@@ -130,11 +133,11 @@ export const RecipeIngredient = pgTable(
   "recipe_ingredient",
   (t) => ({
     recipeId: t
-      .integer()
+      .text()
       .notNull()
       .references(() => Recipe.id, { onDelete: "cascade" }),
     ingredientId: t
-      .integer()
+      .text()
       .notNull()
       .references(() => Ingredient.id, { onDelete: "cascade" }),
     amount: t.real().notNull(),
@@ -159,7 +162,7 @@ export const CreateRecipeSchema = createInsertSchema(Recipe, {
 });
 
 export const UpdateRecipeSchema = createUpdateSchema(Recipe).extend({
-  id: z.number(),
+  id: z.string().uuid(),
 });
 
 export const CreateLabelSchema = createInsertSchema(Label, {
@@ -171,7 +174,7 @@ export const CreateIngredientSchema = createInsertSchema(Ingredient, {
 });
 
 export const UpdateIngredientSchema = createUpdateSchema(Ingredient).extend({
-  id: z.number(),
+  id: z.string().uuid(),
 });
 
 export const CreateUnitSchema = createInsertSchema(Unit, {

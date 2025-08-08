@@ -5,9 +5,9 @@ import { useCreateRecipe } from "@/features/recipes/api/use-recipes";
 import { RecipeForm } from "../recipe-form";
 import { paths } from "@/config/paths";
 import { z } from "zod/v4";
-import { CreateRecipeSchema } from "@menuplanner/db/schema";
+import { CreateRecipeInputSchema } from "@menuplanner/validators";
 
-type RecipeFormData = z.infer<typeof CreateRecipeSchema>;
+type RecipeFormData = z.infer<typeof CreateRecipeInputSchema>;
 
 export function RecipeCreate() {
   const router = useRouter();
@@ -16,8 +16,8 @@ export function RecipeCreate() {
   const handleSubmit = (data: RecipeFormData) => {
     createRecipe.mutate(data, {
       onSuccess: (result) => {
-        if (result && result[0]) {
-          router.push(paths.app.recipes.detail.getHref(result[0].id.toString()));
+        if (result) {
+          router.push(paths.app.recipes.detail.getHref(result.id));
         }
       },
     });

@@ -6,9 +6,9 @@ import { RecipeForm } from "../recipe-form";
 import { paths } from "@/config/paths";
 import type { RouterOutputs } from "@menuplanner/api";
 import { z } from "zod/v4";
-import { CreateRecipeSchema } from "@menuplanner/db/schema";
+import { CreateRecipeInputSchema } from "@menuplanner/validators";
 
-type RecipeFormData = z.infer<typeof CreateRecipeSchema>;
+type RecipeFormData = z.infer<typeof CreateRecipeInputSchema>;
 
 interface RecipeUpdateProps {
   recipe?: RouterOutputs["recipe"]["byId"];
@@ -41,8 +41,8 @@ export function RecipeUpdate({ recipe, recipeId }: RecipeUpdateProps) {
       },
       {
         onSuccess: (result) => {
-          if (result && result[0]) {
-            router.push(paths.app.recipes.detail.getHref(result[0].id.toString()));
+          if (result) {
+            router.push(paths.app.recipes.detail.getHref(recipeData.id));
           }
         },
       }
@@ -50,7 +50,7 @@ export function RecipeUpdate({ recipe, recipeId }: RecipeUpdateProps) {
   };
 
   const handleCancel = () => {
-    router.push(paths.app.recipes.detail.getHref(recipeData.id.toString()));
+    router.push(paths.app.recipes.detail.getHref(recipeData.id));
   };
 
   return (
@@ -58,11 +58,19 @@ export function RecipeUpdate({ recipe, recipeId }: RecipeUpdateProps) {
       initialData={{
         name: recipeData.name,
         description: recipeData.description ?? "",
+        imageKey: recipeData.imageKey ?? undefined,
+        ingredients: recipeData.ingredients?.map(ing => ({
+          ingredientId: ing.ingredient.id,
+          amount: ing.amount,
+          unitAbbr: ing.unit.abbr,
+        })) ?? [],
+        labelIds: recipeData.labels?.map(label => label.label.id) ?? [],
       }}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       isSubmitting={updateRecipe.isPending}
       submitLabel="Update Recipe"
+      recipeId={recipeData.id}
     />
   );
 }

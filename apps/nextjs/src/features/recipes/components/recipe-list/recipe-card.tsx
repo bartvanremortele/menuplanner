@@ -2,7 +2,9 @@
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { useDeleteRecipe, type Recipe } from "@/features/recipes/api/use-recipes";
+import { supabase } from "@/lib/supabase";
 
 export function RecipeCard(props: {
   recipe: Recipe;
@@ -20,7 +22,20 @@ export function RecipeCard(props: {
   };
 
   return (
-    <div className="bg-muted flex flex-col gap-4 rounded-lg p-6">
+    <div className="bg-muted flex flex-col gap-4 rounded-lg p-6 overflow-hidden">
+      {props.recipe.imageKey && (
+        <div className="-m-6 mb-0">
+          <img 
+            src={
+              props.recipe.imageKey.startsWith('http') || props.recipe.imageKey.startsWith('data:')
+                ? props.recipe.imageKey
+                : supabase.storage.from('recipe-images').getPublicUrl(props.recipe.imageKey).data.publicUrl
+            }
+            alt={props.recipe.name}
+            className="w-full h-48 object-cover"
+          />
+        </div>
+      )}
       <div className="flex flex-row items-start justify-between">
         <div className="flex-grow">
           <h2 className="text-primary text-2xl font-bold">
@@ -34,6 +49,15 @@ export function RecipeCard(props: {
               day: "numeric",
             })}
           </p>
+          {props.recipe.labels && props.recipe.labels.length > 0 && (
+            <div className="flex gap-1 flex-wrap mt-2">
+              {props.recipe.labels.map((labelConnection) => (
+                <Badge key={labelConnection.label.id} variant="secondary" className="text-xs">
+                  {labelConnection.label.name}
+                </Badge>
+              ))}
+            </div>
+          )}
         </div>
         <Button
           variant="ghost"
@@ -49,6 +73,11 @@ export function RecipeCard(props: {
           {formatDescription(props.recipe.description)}
         </p>
       </div>
+      {props.recipe.ingredients && props.recipe.ingredients.length > 0 && (
+        <div className="text-sm text-muted-foreground">
+          {props.recipe.ingredients.length} ingredient{props.recipe.ingredients.length !== 1 ? 's' : ''}
+        </div>
+      )}
     </div>
   );
 }
