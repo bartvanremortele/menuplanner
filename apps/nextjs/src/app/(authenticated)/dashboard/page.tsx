@@ -1,14 +1,11 @@
 import { DataTable } from "@/components/common/data-table";
 import { ChartAreaInteractive } from "@/features/dashboard/components/chart-area-interactive";
 import { SectionCards } from "@/features/dashboard/components/section-cards";
-import { HydrateClient, prefetch, trpc } from "@/trpc/server";
+import { HydrateClient } from "@/trpc/server";
 
 import data from "./data.json";
 
-export default async function DashboardPage() {
-  // Prefetch recipe data
-  prefetch(trpc.recipe.all.queryOptions());
-
+export default function DashboardPage() {
   return (
     <HydrateClient>
       <div className="@container/main flex flex-1 flex-col gap-2">

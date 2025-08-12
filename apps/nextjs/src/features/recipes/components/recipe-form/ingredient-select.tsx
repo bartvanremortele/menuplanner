@@ -1,10 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import * as React from "react";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -12,21 +9,25 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { useSearchIngredients, useGetIngredient } from "@/features/recipes/api/use-recipes"
+} from "@/components/ui/popover";
+import {
+  useGetIngredient,
+  useSearchIngredients,
+} from "@/features/recipes/api/use-recipes";
+import { cn } from "@/lib/utils";
+import { Check, ChevronsUpDown } from "lucide-react";
 
 interface IngredientSelectProps {
-  value?: string
-  onChange: (value: string | undefined) => void
-  placeholder?: string
-  className?: string
-  disabled?: boolean
-  initialName?: string  // Add this for displaying the name in edit mode
+  value?: string;
+  onChange: (value: string | undefined) => void;
+  placeholder?: string;
+  className?: string;
+  disabled?: boolean;
 }
 
 export function IngredientSelect({
@@ -35,16 +36,15 @@ export function IngredientSelect({
   placeholder = "Select ingredient...",
   className,
   disabled,
-  initialName,
 }: IngredientSelectProps) {
-  const [open, setOpen] = React.useState(false)
-  const [search, setSearch] = React.useState("")
-  
+  const [open, setOpen] = React.useState(false);
+  const [search, setSearch] = React.useState("");
+
   // Fetch the selected ingredient by ID
-  const { data: selectedIngredient } = useGetIngredient(value)
-  
+  const { data: selectedIngredient } = useGetIngredient(value);
+
   // Fetch search results when searching
-  const { data: searchResults } = useSearchIngredients(search)
+  const { data: searchResults } = useSearchIngredients(search);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -64,8 +64,8 @@ export function IngredientSelect({
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0" align="start">
         <Command shouldFilter={false}>
-          <CommandInput 
-            placeholder="Search ingredients..." 
+          <CommandInput
+            placeholder="Search ingredients..."
             className="h-9"
             value={search}
             onValueChange={setSearch}
@@ -78,15 +78,17 @@ export function IngredientSelect({
                   key={ingredient.id}
                   value={ingredient.name}
                   onSelect={() => {
-                    onChange(ingredient.id === value ? undefined : ingredient.id)
-                    setOpen(false)
+                    onChange(
+                      ingredient.id === value ? undefined : ingredient.id,
+                    );
+                    setOpen(false);
                   }}
                 >
                   {ingredient.name}
                   <Check
                     className={cn(
                       "ml-auto h-4 w-4",
-                      value === ingredient.id ? "opacity-100" : "opacity-0"
+                      value === ingredient.id ? "opacity-100" : "opacity-0",
                     )}
                   />
                 </CommandItem>
@@ -96,5 +98,5 @@ export function IngredientSelect({
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

@@ -1,1 +1,1 @@
-export * from './recipe-view';
+export * from "./recipe-view";

@@ -1,9 +1,14 @@
-import { useSuspenseQuery, useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import { toast } from "sonner";
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useTRPC } from "@/trpc/react";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { toast } from "sonner";
+
 import type { RouterOutputs } from "@menuplanner/api";
-import { z } from "zod/v4";
-import { UpdateRecipeInputSchema } from "@menuplanner/validators";
 
 export type Recipe = RouterOutputs["recipe"]["all"][number];
 export type Ingredient = RouterOutputs["ingredient"]["all"][number];
@@ -18,79 +23,76 @@ export function useGetRecipes() {
 export function useGetRecipe(id: string) {
   const trpc = useTRPC();
   return useSuspenseQuery(
-    trpc.recipe.byId.queryOptions({ id }, {
-      enabled: !!id,
-    })
+    trpc.recipe.byId.queryOptions(
+      { id },
+      {
+        enabled: !!id,
+      },
+    ),
   );
 }
 
 export function useCreateRecipe() {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-  
+
   return useMutation(
     trpc.recipe.create.mutationOptions({
       onSuccess: async () => {
-        await queryClient.invalidateQueries(
-          trpc.recipe.all.queryFilter()
-        );
+        await queryClient.invalidateQueries(trpc.recipe.all.queryFilter());
         toast.success("Recipe created successfully");
       },
       onError: (error) => {
         toast.error(`Failed to create recipe: ${error.message}`);
       },
-    })
+    }),
   );
 }
 
 export function useUpdateRecipe() {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-  
+
   return useMutation(
     trpc.recipe.update.mutationOptions({
       onSuccess: async (data, variables) => {
         // Use tRPC's queryKey method - id is now a UUID string
-        await queryClient.invalidateQueries({ 
-          queryKey: trpc.recipe.all.queryKey() 
+        await queryClient.invalidateQueries({
+          queryKey: trpc.recipe.all.queryKey(),
         });
-        await queryClient.invalidateQueries({ 
-          queryKey: trpc.recipe.byId.queryKey({ id: variables.id }) 
+        await queryClient.invalidateQueries({
+          queryKey: trpc.recipe.byId.queryKey({ id: variables.id }),
         });
         toast.success("Recipe updated successfully");
       },
       onError: (error) => {
         toast.error(`Failed to update recipe: ${error.message}`);
       },
-    })
+    }),
   );
 }
 
 export function useDeleteRecipe() {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-  
+
   return useMutation(
     trpc.recipe.delete.mutationOptions({
       onSuccess: async () => {
-        await queryClient.invalidateQueries(
-          trpc.recipe.all.queryFilter()
-        );
+        await queryClient.invalidateQueries(trpc.recipe.all.queryFilter());
         toast.success("Recipe deleted successfully");
       },
       onError: (error) => {
         toast.error(`Failed to delete recipe: ${error.message}`);
       },
-    })
+    }),
   );
 }
 
 // Ingredient hooks
 export function useSearchIngredients(query: string) {
   const trpc = useTRPC();
-  return useQuery(
-    trpc.ingredient.search.queryOptions({ query })
-  );
+  return useQuery(trpc.ingredient.search.queryOptions({ query }));
 }
 
 export function useGetIngredients() {
@@ -101,18 +103,12 @@ export function useGetIngredients() {
 export function useGetIngredient(id: string | undefined) {
   const trpc = useTRPC();
   return useQuery(
-    trpc.ingredient.byId.queryOptions({ id: id! }, {
-      enabled: !!id,
-    })
-  );
-}
-
-export function useGetIngredientsByIds(ids: string[]) {
-  const trpc = useTRPC();
-  return useQuery(
-    trpc.ingredient.byIds.queryOptions({ ids }, {
-      enabled: ids.length > 0,
-    })
+    trpc.ingredient.byId.queryOptions(
+      { id: id! },
+      {
+        enabled: !!id,
+      },
+    ),
   );
 }
 
@@ -125,9 +121,12 @@ export function useGetLabels() {
 export function useSearchLabels(query: string) {
   const trpc = useTRPC();
   return useQuery(
-    trpc.label.search.queryOptions({ query }, {
-      enabled: query !== undefined,
-    })
+    trpc.label.search.queryOptions(
+      { query },
+      {
+        enabled: true, // query is always a string
+      },
+    ),
   );
 }
 

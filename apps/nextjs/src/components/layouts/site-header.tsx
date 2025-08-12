@@ -1,4 +1,4 @@
-import { SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export function SiteHeader() {
   return (
@@ -7,5 +7,5 @@ export function SiteHeader() {
         <SidebarTrigger className="-ml-1" />
       </div>
     </header>
-  )
+  );
 }

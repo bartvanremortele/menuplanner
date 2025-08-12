@@ -1,8 +1,8 @@
 "use client";
 
 import { useGetRecipes } from "@/features/recipes/api/use-recipes";
-import { RecipeCard } from "./recipe-card";
-import { RecipeCardSkeleton } from "./recipe-card";
+
+import { RecipeCard, RecipeCardSkeleton } from "./recipe-card";
 
 export function RecipeList() {
   const { data: recipes } = useGetRecipes();

@@ -1,5 +1,6 @@
 "use client";
 
+import type { z } from "zod/v4";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,12 +13,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useGetLabels } from "@/features/recipes/api/use-recipes";
+
 import { CreateRecipeInputSchema } from "@menuplanner/validators";
-import { z } from "zod/v4";
+
 import { ImageUpload } from "./image-upload";
 import { MultiSelect } from "./multi-select";
 import { RecipeIngredientsInput } from "./recipe-ingredients-input";
-import { useGetLabels } from "@/features/recipes/api/use-recipes";
 
 type RecipeFormData = z.infer<typeof CreateRecipeInputSchema>;
 
@@ -30,16 +32,16 @@ interface RecipeFormProps {
   recipeId?: string;
 }
 
-export function RecipeForm({ 
-  initialData, 
-  onSubmit, 
+export function RecipeForm({
+  initialData,
+  onSubmit,
   onCancel,
   isSubmitting = false,
   submitLabel = "Submit",
-  recipeId
+  recipeId,
 }: RecipeFormProps) {
   const { data: labels } = useGetLabels();
-  
+
   const form = useForm({
     schema: CreateRecipeInputSchema,
     defaultValues: {
@@ -87,7 +89,7 @@ export function RecipeForm({
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="imageKey"
@@ -114,10 +116,12 @@ export function RecipeForm({
               <FormLabel>Labels</FormLabel>
               <FormControl>
                 <MultiSelect
-                  options={labels?.map((label) => ({
-                    value: label.id,
-                    label: label.name,
-                  })) ?? []}
+                  options={
+                    labels?.map((label) => ({
+                      value: label.id,
+                      label: label.name,
+                    })) ?? []
+                  }
                   selected={field.value ?? []}
                   onChange={field.onChange}
                   placeholder="Select labels..."

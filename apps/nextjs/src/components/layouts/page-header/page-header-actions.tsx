@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 
 export interface PageHeaderActionProps {
@@ -16,7 +16,13 @@ export interface PageHeaderActionProps {
   icon?: React.ReactNode;
   onClick?: () => void;
   href?: string;
-  variant?: "default" | "secondary" | "destructive" | "outline" | "ghost" | "link";
+  variant?:
+    | "default"
+    | "secondary"
+    | "destructive"
+    | "outline"
+    | "ghost"
+    | "link";
   asChild?: boolean;
   children?: React.ReactNode;
 }
@@ -38,12 +44,14 @@ export function PageHeaderAction({
   );
 
   if (asChild && children) {
-    const childElement = React.Children.only(children) as React.ReactElement;
+    const childElement = React.Children.only(children) as React.ReactElement<{
+      children?: React.ReactNode;
+    }>;
     return (
       <Button variant={variant} asChild>
         {React.cloneElement(childElement, {
-          children: content
-        } as any)}
+          children: content,
+        })}
       </Button>
     );
   }
@@ -69,13 +77,13 @@ export interface PageHeaderActionsProps {
   mobileDropdownLabel?: string;
 }
 
-export function PageHeaderActions({ 
-  children, 
+export function PageHeaderActions({
+  children,
   className,
   mobileDropdownLabel = "More",
 }: PageHeaderActionsProps) {
   const childrenArray = React.Children.toArray(children);
-  
+
   // Desktop: show all actions
   const desktopActions = childrenArray.map((child, index) => (
     <span key={index} className={cn(index > 0 && "ml-3", "hidden sm:block")}>
@@ -88,15 +96,11 @@ export function PageHeaderActions({
   const secondaryActions = childrenArray.slice(1);
 
   return (
-    <div className={cn("mt-5 flex lg:mt-0 lg:ml-4", className)}>
+    <div className={cn("mt-5 flex lg:ml-4 lg:mt-0", className)}>
       {desktopActions}
-      
+
       {/* Mobile primary action */}
-      {primaryAction && (
-        <span className="sm:hidden">
-          {primaryAction}
-        </span>
-      )}
+      {primaryAction && <span className="sm:hidden">{primaryAction}</span>}
 
       {/* Mobile dropdown for secondary actions */}
       {secondaryActions.length > 0 && (
@@ -110,9 +114,12 @@ export function PageHeaderActions({
           <DropdownMenuContent align="end" className="w-48">
             {secondaryActions.map((action, index) => {
               // Extract props from the action element if it's a PageHeaderAction
-              const actionElement = action as React.ReactElement<PageHeaderActionProps>;
-              if (actionElement && actionElement.props) {
-                const { label, onClick, href } = actionElement.props;
+              if (
+                React.isValidElement(action) &&
+                action.type === PageHeaderAction
+              ) {
+                const { label, onClick, href } =
+                  action.props as PageHeaderActionProps;
                 return (
                   <DropdownMenuItem
                     key={index}

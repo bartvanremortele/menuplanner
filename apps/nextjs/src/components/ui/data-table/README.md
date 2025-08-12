@@ -16,7 +16,11 @@ A flexible and type-safe table component built on top of Tanstack Table v8, desi
 ## Basic Usage
 
 ```tsx
-import { DataTable, createTextColumn, createActionsColumn } from "~/app/_components/ui/data-table";
+import {
+  createActionsColumn,
+  createTextColumn,
+  DataTable,
+} from "~/app/_components/ui/data-table";
 
 // Define your data type
 type User = {
@@ -33,7 +37,11 @@ const columns = [
   createTextColumn<User>("role", "Role"),
   createActionsColumn<User>([
     { label: "Edit", onClick: (user) => console.log("Edit", user) },
-    { label: "Delete", onClick: (user) => console.log("Delete", user), variant: "destructive" },
+    {
+      label: "Delete",
+      onClick: (user) => console.log("Delete", user),
+      variant: "destructive",
+    },
   ]),
 ];
 
@@ -52,6 +60,7 @@ export function UsersTable({ users }: { users: User[] }) {
 ## Column Helpers
 
 ### createSelectColumn
+
 Adds a checkbox column for row selection.
 
 ```tsx
@@ -62,16 +71,18 @@ const columns = [
 ```
 
 ### createTextColumn
+
 Creates a text column with optional sorting and hiding.
 
 ```tsx
 createTextColumn<User>("name", "Name", {
-  enableSorting: true,  // default: true
-  enableHiding: true,   // default: true
+  enableSorting: true, // default: true
+  enableHiding: true, // default: true
 });
 ```
 
 ### createDateColumn
+
 Creates a date column with automatic formatting.
 
 ```tsx
@@ -80,6 +91,7 @@ createDateColumn<User>("updatedAt", "Updated", "PPP"); // Format: January 1st, 2
 ```
 
 ### createCustomColumn
+
 Creates a column with custom cell rendering.
 
 ```tsx
@@ -91,6 +103,7 @@ createCustomColumn<User>("status", "Status", (user) => (
 ```
 
 ### createActionsColumn
+
 Creates an actions dropdown menu column.
 
 ```tsx
@@ -101,7 +114,7 @@ createActionsColumn<User>([
   },
   {
     label: "Send Email",
-    onClick: (user) => window.location.href = `mailto:${user.email}`,
+    onClick: (user) => (window.location.href = `mailto:${user.email}`),
   },
   {
     label: "Delete",
@@ -123,6 +136,7 @@ For more control, you can define columns manually:
 
 ```tsx
 import { ColumnDef } from "@tanstack/react-table";
+
 import { DataTableColumnHeader } from "~/app/_components/ui/data-table";
 
 const columns: ColumnDef<User>[] = [
@@ -169,19 +183,20 @@ Make rows clickable for navigation or actions:
 "use client";
 
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
-import { useTRPC } from "~/trpc/react";
+import { toast } from "sonner";
+
+import type { ColumnDef } from "~/app/_components/ui/data-table";
+import { Badge } from "~/app/_components/ui/badge";
 import {
-  DataTable,
-  createSelectColumn,
-  createTextColumn,
-  createDateColumn,
   createActionsColumn,
   createCustomColumn,
-  type ColumnDef,
+  createDateColumn,
+  createSelectColumn,
+  createTextColumn,
+  DataTable,
 } from "~/app/_components/ui/data-table";
-import { Badge } from "~/app/_components/ui/badge";
+import { useTRPC } from "~/trpc/react";
 
 type Recipe = {
   id: number;
@@ -195,9 +210,9 @@ export function RecipesTable() {
   const router = useRouter();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-  
+
   const { data: recipes = [], isLoading } = trpc.recipe.all.useQuery();
-  
+
   const deleteMutation = trpc.recipe.delete.useMutation({
     onSuccess: async () => {
       toast.success("Recipe deleted");

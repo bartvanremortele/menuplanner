@@ -1,31 +1,30 @@
 "use client";
 
 import * as React from "react";
-import {
-  IconDashboard,
-  IconDatabase,
-  IconInnerShadowTop,
-  IconSettings,
-  IconChefHat,
-  IconCarrot,
-} from "@tabler/icons-react";
-
+import { NavAction } from "@/components/layouts/nav-action";
+import { NavCollapsible } from "@/components/layouts/nav-collapsible";
 import { NavMain } from "@/components/layouts/nav-main";
 import { NavSecondary } from "@/components/layouts/nav-secondary";
 import { NavUser } from "@/components/layouts/nav-user";
-import { NavCollapsible } from "@/components/layouts/nav-collapsible";
-import { NavAction } from "@/components/layouts/nav-action";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarGroup,
-  SidebarGroupContent,
 } from "@/components/ui/sidebar";
+import {
+  IconCarrot,
+  IconChefHat,
+  IconDashboard,
+  IconDatabase,
+  IconInnerShadowTop,
+  IconSettings,
+} from "@tabler/icons-react";
 
 const data = {
   navMain: [
@@ -96,8 +95,8 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              <NavCollapsible 
-                title="Master Data" 
+              <NavCollapsible
+                title="Master Data"
                 items={data.masterData}
                 icon={IconDatabase}
                 defaultOpen={true}

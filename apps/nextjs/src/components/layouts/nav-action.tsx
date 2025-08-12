@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { IconCirclePlusFilled } from "@tabler/icons-react"
+import Link from "next/link";
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { IconCirclePlusFilled } from "@tabler/icons-react";
 
 export function NavAction() {
   return (
@@ -19,7 +19,7 @@ export function NavAction() {
             <SidebarMenuButton
               asChild
               tooltip="New Recipe"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
+              className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
             >
               <Link href="/recipes/new">
                 <IconCirclePlusFilled />
@@ -30,5 +30,5 @@ export function NavAction() {
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  )
+  );
 }

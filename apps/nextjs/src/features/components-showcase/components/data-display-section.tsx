@@ -1,5 +1,11 @@
 "use client";
 
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { DeleteDialog } from "@/components/ui/delete-dialog";
+import { DL } from "@/components/ui/description-list";
+import { DetailHeader } from "@/components/ui/detail-header";
 import {
   Table,
   TableBody,
@@ -9,19 +15,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { DL } from "@/components/ui/description-list";
-import { DetailHeader } from "@/components/ui/detail-header";
-import { DeleteDialog } from "@/components/ui/delete-dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import { ComponentExample } from "./component-example";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 
 const invoices = [
   {
@@ -74,15 +70,17 @@ export function DataDisplaySection() {
                       invoice.paymentStatus === "Paid"
                         ? "default"
                         : invoice.paymentStatus === "Pending"
-                        ? "secondary"
-                        : "destructive"
+                          ? "secondary"
+                          : "destructive"
                     }
                   >
                     {invoice.paymentStatus}
                   </Badge>
                 </TableCell>
                 <TableCell>{invoice.paymentMethod}</TableCell>
-                <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+                <TableCell className="text-right">
+                  {invoice.totalAmount}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -134,28 +132,31 @@ export function DataDisplaySection() {
       >
         <div className="max-w-2xl">
           <DL>
-            <DL.Item term="Full Name">
-              John Doe
-            </DL.Item>
-            <DL.Item term="Email Address">
-              john.doe@example.com
-            </DL.Item>
+            <DL.Item term="Full Name">John Doe</DL.Item>
+            <DL.Item term="Email Address">john.doe@example.com</DL.Item>
             <DL.Item term="Role">
               <Badge>Administrator</Badge>
             </DL.Item>
             <DL.Item term="About">
-              Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident.
+              Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim
+              incididunt cillum culpa consequat. Excepteur qui ipsum aliquip
+              consequat sint. Sit id mollit nulla mollit nostrud in ea officia
+              proident.
             </DL.Item>
             <DL.Item term="Attachments">
               <ul className="divide-y divide-border rounded-md border">
                 <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                   <div className="flex w-0 flex-1 items-center">
-                    <span className="ml-2 w-0 flex-1 truncate">resume_back_end_developer.pdf</span>
+                    <span className="ml-2 w-0 flex-1 truncate">
+                      resume_back_end_developer.pdf
+                    </span>
                   </div>
                 </li>
                 <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                   <div className="flex w-0 flex-1 items-center">
-                    <span className="ml-2 w-0 flex-1 truncate">coverletter_back_end_developer.pdf</span>
+                    <span className="ml-2 w-0 flex-1 truncate">
+                      coverletter_back_end_developer.pdf
+                    </span>
                   </div>
                 </li>
               </ul>

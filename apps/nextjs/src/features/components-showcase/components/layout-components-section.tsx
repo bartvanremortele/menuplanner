@@ -1,34 +1,20 @@
 "use client";
 
-import { 
-  PageHeader, 
-  PageHeaderMeta, 
-  PageHeaderMetaItem,
+import { useState } from "react";
+import {
+  PageHeader,
+  PageHeaderAction,
   PageHeaderActions,
-  PageHeaderAction 
+  PageHeaderMeta,
+  PageHeaderMetaItem,
 } from "@/components/layouts/page-header";
-import { 
-  Briefcase, 
-  MapPin, 
-  DollarSign, 
-  Calendar,
-  Edit,
-  Link2,
-  Check,
-  Plus,
-  ArrowLeft
-} from "lucide-react";
-import Link from "next/link";
-import { ComponentExample } from "./component-example";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
   Drawer,
   DrawerClose,
@@ -39,14 +25,27 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+  Briefcase,
+  Calendar,
+  Check,
+  ChevronDown,
+  DollarSign,
+  Edit,
+  Link2,
+  MapPin,
+  Plus,
+} from "lucide-react";
+
+import { ComponentExample } from "./component-example";
 
 export function LayoutComponentsSection() {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +61,7 @@ export function LayoutComponentsSection() {
           {/* Simple Header */}
           <Card>
             <CardContent className="p-6">
-              <h4 className="text-sm font-medium mb-4">Simple Header</h4>
+              <h4 className="mb-4 text-sm font-medium">Simple Header</h4>
               <PageHeader
                 title="Dashboard"
                 subtitle="Welcome back! Here's what's happening with your recipes today."
@@ -73,14 +72,14 @@ export function LayoutComponentsSection() {
           {/* Header with Actions */}
           <Card>
             <CardContent className="p-6">
-              <h4 className="text-sm font-medium mb-4">Header with Actions</h4>
+              <h4 className="mb-4 text-sm font-medium">Header with Actions</h4>
               <PageHeader
                 title="Recipes"
                 subtitle="Manage your recipe collection"
                 actions={
                   <PageHeaderActions>
-                    <PageHeaderAction 
-                      label="New Recipe" 
+                    <PageHeaderAction
+                      label="New Recipe"
                       icon={<Plus className="mr-2 size-4" />}
                       variant="default"
                       onClick={() => console.log("New recipe")}
@@ -94,31 +93,37 @@ export function LayoutComponentsSection() {
           {/* Header with Metadata */}
           <Card>
             <CardContent className="p-6">
-              <h4 className="text-sm font-medium mb-4">Header with Metadata</h4>
+              <h4 className="mb-4 text-sm font-medium">Header with Metadata</h4>
               <PageHeader
                 title="Back End Developer"
                 meta={
                   <PageHeaderMeta>
                     <PageHeaderMetaItem icon={Briefcase} label="Full-time" />
                     <PageHeaderMetaItem icon={MapPin} label="Remote" />
-                    <PageHeaderMetaItem icon={DollarSign} label="$120k – $140k" />
-                    <PageHeaderMetaItem icon={Calendar} label="Closing on January 9, 2024" />
+                    <PageHeaderMetaItem
+                      icon={DollarSign}
+                      label="$120k – $140k"
+                    />
+                    <PageHeaderMetaItem
+                      icon={Calendar}
+                      label="Closing on January 9, 2024"
+                    />
                   </PageHeaderMeta>
                 }
                 actions={
                   <PageHeaderActions>
-                    <PageHeaderAction 
-                      label="Edit" 
+                    <PageHeaderAction
+                      label="Edit"
                       icon={<Edit className="mr-2 size-5" />}
                       onClick={() => console.log("Edit")}
                     />
-                    <PageHeaderAction 
-                      label="View" 
+                    <PageHeaderAction
+                      label="View"
                       icon={<Link2 className="mr-2 size-5" />}
                       onClick={() => console.log("View")}
                     />
-                    <PageHeaderAction 
-                      label="Publish" 
+                    <PageHeaderAction
+                      label="Publish"
                       icon={<Check className="mr-2 size-5" />}
                       variant="default"
                       onClick={() => console.log("Publish")}
@@ -132,18 +137,20 @@ export function LayoutComponentsSection() {
           {/* Header with Back Button */}
           <Card>
             <CardContent className="p-6">
-              <h4 className="text-sm font-medium mb-4">Header with Back Button</h4>
+              <h4 className="mb-4 text-sm font-medium">
+                Header with Back Button
+              </h4>
               <PageHeader
                 title="Recipe Details"
                 subtitle="View and manage recipe information"
                 backButton={{
                   href: "#",
-                  label: "Back to recipes"
+                  label: "Back to recipes",
                 }}
                 actions={
                   <PageHeaderActions>
-                    <PageHeaderAction 
-                      label="Edit Recipe" 
+                    <PageHeaderAction
+                      label="Edit Recipe"
                       icon={<Edit className="mr-2 size-4" />}
                       onClick={() => console.log("Edit recipe")}
                     />
@@ -169,7 +176,8 @@ export function LayoutComponentsSection() {
               <SheetHeader>
                 <SheetTitle>Edit profile</SheetTitle>
                 <SheetDescription>
-                  Make changes to your profile here. Click save when you're done.
+                  Make changes to your profile here. Click save when you're
+                  done.
                 </SheetDescription>
               </SheetHeader>
               <div className="grid gap-4 py-4">
@@ -213,7 +221,9 @@ export function LayoutComponentsSection() {
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Are you sure?</DrawerTitle>
-              <DrawerDescription>This action cannot be undone.</DrawerDescription>
+              <DrawerDescription>
+                This action cannot be undone.
+              </DrawerDescription>
             </DrawerHeader>
             <div className="p-4">
               <p className="text-sm text-muted-foreground">
@@ -246,7 +256,9 @@ export function LayoutComponentsSection() {
             </h4>
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="sm" className="w-9 p-0">
-                <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                />
                 <span className="sr-only">Toggle</span>
               </Button>
             </CollapsibleTrigger>

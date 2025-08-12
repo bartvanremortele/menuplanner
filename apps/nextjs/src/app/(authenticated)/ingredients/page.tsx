@@ -1,6 +1,6 @@
-import { IconPlus } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { IngredientsTable } from "@/features/ingredients/components/ingredients-table";
+import { IconPlus } from "@tabler/icons-react";
 
 export default function IngredientsPage() {
   return (
@@ -17,7 +17,7 @@ export default function IngredientsPage() {
           New Ingredient
         </Button>
       </div>
-      
+
       <IngredientsTable />
     </div>
   );

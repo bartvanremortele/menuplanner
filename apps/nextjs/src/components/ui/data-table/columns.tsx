@@ -1,9 +1,6 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
-import { IconDotsVertical } from "@tabler/icons-react";
-
+import type { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -14,6 +11,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { IconDotsVertical } from "@tabler/icons-react";
+import { format } from "date-fns";
+
 import { DataTableColumnHeader } from "./column-header";
 
 // Helper function to create a selection column
@@ -22,7 +22,7 @@ export function createSelectColumn<T>(): ColumnDef<T> {
     id: "select",
     header: ({ table }) => (
       <label
-        className="flex h-full w-full items-center justify-center cursor-pointer"
+        className="flex h-full w-full cursor-pointer items-center justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         <Checkbox
@@ -38,7 +38,7 @@ export function createSelectColumn<T>(): ColumnDef<T> {
     ),
     cell: ({ row }) => (
       <label
-        className="flex h-full w-full items-center justify-center cursor-pointer py-2"
+        className="flex h-full w-full cursor-pointer items-center justify-center py-2"
         onClick={(e) => e.stopPropagation()}
       >
         <Checkbox
@@ -61,9 +61,7 @@ interface ActionItem<T> {
   variant?: "default" | "destructive";
 }
 
-export function createActionsColumn<T>(
-  actions: ActionItem<T>[]
-): ColumnDef<T> {
+export function createActionsColumn<T>(actions: ActionItem<T>[]): ColumnDef<T> {
   return {
     id: "actions",
     enableHiding: false,
@@ -115,7 +113,7 @@ export function createTextColumn<T>(
   options?: {
     enableSorting?: boolean;
     enableHiding?: boolean;
-  }
+  },
 ): ColumnDef<T> {
   return {
     accessorKey: accessorKey as string,
@@ -131,7 +129,7 @@ export function createTextColumn<T>(
 export function createDateColumn<T>(
   accessorKey: keyof T,
   title: string,
-  dateFormat: string = "PPP"
+  dateFormat = "PPP",
 ): ColumnDef<T> {
   return {
     accessorKey: accessorKey as string,
@@ -139,7 +137,7 @@ export function createDateColumn<T>(
       <DataTableColumnHeader column={column} title={title} />
     ),
     cell: ({ row }) => {
-      const date = row.getValue(accessorKey as string) as Date;
+      const date = row.getValue(accessorKey as string);
       return date ? format(date, dateFormat) : "-";
     },
   };
@@ -149,7 +147,7 @@ export function createDateColumn<T>(
 export function createCustomColumn<T>(
   id: string,
   title: string,
-  cell: (row: T) => React.ReactNode
+  cell: (row: T) => React.ReactNode,
 ): ColumnDef<T> {
   return {
     id,

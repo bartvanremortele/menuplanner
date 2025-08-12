@@ -1,38 +1,39 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { IconChevronDown, type Icon } from "@tabler/icons-react"
+import type { Icon } from "@tabler/icons-react";
+import Link from "next/link";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+} from "@/components/ui/collapsible";
 import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { IconChevronDown } from "@tabler/icons-react";
 
 interface NavItem {
-  title: string
-  url: string
-  icon?: Icon
+  title: string;
+  url: string;
+  icon?: Icon;
 }
 
 interface NavCollapsibleProps {
-  title: string
-  items: NavItem[]
-  icon?: Icon
-  defaultOpen?: boolean
+  title: string;
+  items: NavItem[];
+  icon?: Icon;
+  defaultOpen?: boolean;
 }
 
-export function NavCollapsible({ 
-  title, 
-  items, 
+export function NavCollapsible({
+  title,
+  items,
   icon: Icon,
-  defaultOpen = true 
+  defaultOpen = true,
 }: NavCollapsibleProps) {
   return (
     <Collapsible defaultOpen={defaultOpen} className="group/collapsible">
@@ -60,5 +61,5 @@ export function NavCollapsible({
         </CollapsibleContent>
       </SidebarMenuItem>
     </Collapsible>
-  )
+  );
 }

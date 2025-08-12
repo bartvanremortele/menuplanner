@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface DescriptionListProps {
@@ -7,11 +7,7 @@ interface DescriptionListProps {
 }
 
 export function DescriptionList({ children, className }: DescriptionListProps) {
-  return (
-    <dl className={cn("divide-y", className)}>
-      {children}
-    </dl>
-  );
+  return <dl className={cn("divide-y", className)}>{children}</dl>;
 }
 
 interface DescriptionTermProps {
@@ -21,7 +17,9 @@ interface DescriptionTermProps {
 
 export function DescriptionTerm({ children, className }: DescriptionTermProps) {
   return (
-    <dt className={cn("text-sm font-medium leading-6 text-foreground", className)}>
+    <dt
+      className={cn("text-sm font-medium leading-6 text-foreground", className)}
+    >
       {children}
     </dt>
   );
@@ -32,9 +30,17 @@ interface DescriptionDetailsProps {
   className?: string;
 }
 
-export function DescriptionDetails({ children, className }: DescriptionDetailsProps) {
+export function DescriptionDetails({
+  children,
+  className,
+}: DescriptionDetailsProps) {
   return (
-    <dd className={cn("mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0", className)}>
+    <dd
+      className={cn(
+        "mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0",
+        className,
+      )}
+    >
       {children}
     </dd>
   );
@@ -46,9 +52,18 @@ interface DescriptionItemProps {
   className?: string;
 }
 
-export function DescriptionItem({ term, children, className }: DescriptionItemProps) {
+export function DescriptionItem({
+  term,
+  children,
+  className,
+}: DescriptionItemProps) {
   return (
-    <div className={cn("px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0", className)}>
+    <div
+      className={cn(
+        "px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0",
+        className,
+      )}
+    >
       <DescriptionTerm>{term}</DescriptionTerm>
       <DescriptionDetails>{children}</DescriptionDetails>
     </div>

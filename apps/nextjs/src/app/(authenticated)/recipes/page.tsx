@@ -1,12 +1,12 @@
-import Link from "next/link";
 import { Suspense } from "react";
-import { Plus } from "lucide-react";
-import { RecipeTable } from "@/features/recipes/components/recipe-list";
-import { 
-  PageHeader, 
-  PageHeaderActions, 
-  PageHeaderAction 
+import Link from "next/link";
+import {
+  PageHeader,
+  PageHeaderAction,
+  PageHeaderActions,
 } from "@/components/layouts/page-header";
+import { RecipeTable } from "@/features/recipes/components/recipe-list";
+import { Plus } from "lucide-react";
 
 function RecipeTableSkeleton() {
   return (
@@ -30,8 +30,8 @@ export default function RecipesPage() {
         subtitle="Manage your recipe collection"
         actions={
           <PageHeaderActions>
-            <PageHeaderAction 
-              label="New Recipe" 
+            <PageHeaderAction
+              label="New Recipe"
               icon={<Plus className="mr-2 size-4" />}
               variant="default"
               asChild
@@ -41,7 +41,7 @@ export default function RecipesPage() {
           </PageHeaderActions>
         }
       />
-      
+
       <Suspense fallback={<RecipeTableSkeleton />}>
         <RecipeTable />
       </Suspense>

@@ -1,12 +1,17 @@
 "use client";
 
+import type { z } from "zod/v4";
 import { useRouter } from "next/navigation";
-import { useGetRecipe, useUpdateRecipe } from "@/features/recipes/api/use-recipes";
-import { RecipeForm } from "../recipe-form";
 import { paths } from "@/config/paths";
+import {
+  useGetRecipe,
+  useUpdateRecipe,
+} from "@/features/recipes/api/use-recipes";
+
 import type { RouterOutputs } from "@menuplanner/api";
-import { z } from "zod/v4";
-import { CreateRecipeInputSchema } from "@menuplanner/validators";
+import type { CreateRecipeInputSchema } from "@menuplanner/validators";
+
+import { RecipeForm } from "../recipe-form";
 
 type RecipeFormData = z.infer<typeof CreateRecipeInputSchema>;
 
@@ -18,16 +23,15 @@ interface RecipeUpdateProps {
 export function RecipeUpdate({ recipe, recipeId }: RecipeUpdateProps) {
   const router = useRouter();
   const updateRecipe = useUpdateRecipe();
-  
-  // If recipeId is provided, use the hook to fetch the recipe
-  // This will suspend, which is fine since we're in a Suspense boundary
-  const { data: fetchedRecipe } = recipeId && !recipe ? useGetRecipe(recipeId) : { data: undefined };
-  
+
+  // Always call the hook - it won't fetch if recipeId is falsy
+  const { data: fetchedRecipe } = useGetRecipe(recipeId ?? "");
+
   const recipeData = recipe ?? fetchedRecipe;
 
   if (!recipeData) {
     return (
-      <div className="text-center py-12">
+      <div className="py-12 text-center">
         <p className="text-muted-foreground">Recipe not found</p>
       </div>
     );
@@ -45,7 +49,7 @@ export function RecipeUpdate({ recipe, recipeId }: RecipeUpdateProps) {
             router.push(paths.app.recipes.detail.getHref(recipeData.id));
           }
         },
-      }
+      },
     );
   };
 
@@ -57,14 +61,14 @@ export function RecipeUpdate({ recipe, recipeId }: RecipeUpdateProps) {
     <RecipeForm
       initialData={{
         name: recipeData.name,
-        description: recipeData.description ?? "",
+        description: recipeData.description,
         imageKey: recipeData.imageKey ?? undefined,
-        ingredients: recipeData.ingredients?.map(ing => ({
+        ingredients: recipeData.ingredients.map((ing) => ({
           ingredientId: ing.ingredient.id,
           amount: ing.amount,
           unitAbbr: ing.unit.abbr,
-        })) ?? [],
-        labelIds: recipeData.labels?.map(label => label.label.id) ?? [],
+        })),
+        labelIds: recipeData.labels.map((label) => label.label.id),
       }}
       onSubmit={handleSubmit}
       onCancel={handleCancel}

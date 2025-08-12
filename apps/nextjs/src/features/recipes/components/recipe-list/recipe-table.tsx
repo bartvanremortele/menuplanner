@@ -1,21 +1,24 @@
 "use client";
 
+import type { ColumnDef } from "@/components/ui/data-table";
+import type { Recipe } from "@/features/recipes/api/use-recipes";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import { Badge } from "@/components/ui/badge";
 import {
-  DataTable,
-  createSelectColumn,
-  createTextColumn,
-  createDateColumn,
   createActionsColumn,
   createCustomColumn,
-  type ColumnDef,
+  createDateColumn,
+  createSelectColumn,
+  createTextColumn,
+  DataTable,
 } from "@/components/ui/data-table";
-import { Badge } from "@/components/ui/badge";
-import { useGetRecipes, useDeleteRecipe, type Recipe } from "@/features/recipes/api/use-recipes";
-import { paths } from "@/config/paths";
 import { DeleteDialog } from "@/components/ui/delete-dialog";
+import { paths } from "@/config/paths";
+import {
+  useDeleteRecipe,
+  useGetRecipes,
+} from "@/features/recipes/api/use-recipes";
 
 export function RecipeTable() {
   const router = useRouter();
@@ -42,7 +45,7 @@ export function RecipeTable() {
     createTextColumn<Recipe>("name", "Name", { enableSorting: true }),
     createCustomColumn<Recipe>("labels", "Labels", (recipe) => (
       <div className="flex gap-1">
-        {recipe.labels && recipe.labels.length > 0 ? (
+        {recipe.labels.length > 0 ? (
           recipe.labels.map((connection) => (
             <Badge key={connection.label.id} variant="secondary">
               {connection.label.name}
@@ -57,7 +60,8 @@ export function RecipeTable() {
     createActionsColumn<Recipe>([
       {
         label: "Edit",
-        onClick: (recipe) => router.push(paths.app.recipes.edit.getHref(recipe.id.toString())),
+        onClick: (recipe) =>
+          router.push(paths.app.recipes.edit.getHref(recipe.id)),
       },
       {
         label: "Delete",
@@ -75,9 +79,11 @@ export function RecipeTable() {
         columns={columns}
         data={recipes}
         searchKey="name"
-        onRowClick={(row) => router.push(paths.app.recipes.detail.getHref(row.original.id.toString()))}
+        onRowClick={(row) =>
+          router.push(paths.app.recipes.detail.getHref(row.original.id))
+        }
       />
-      
+
       <DeleteDialog
         open={deleteDialog.open}
         onOpenChange={(open) => {

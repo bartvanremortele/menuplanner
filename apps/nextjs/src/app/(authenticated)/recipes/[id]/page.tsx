@@ -1,14 +1,14 @@
-import Link from "next/link";
 import { Suspense } from "react";
-import { Edit } from "lucide-react";
-import { RecipeView } from "@/features/recipes/components/recipe-view";
+import Link from "next/link";
+import {
+  PageHeader,
+  PageHeaderAction,
+  PageHeaderActions,
+} from "@/components/layouts/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { paths } from "@/config/paths";
-import { 
-  PageHeader, 
-  PageHeaderActions, 
-  PageHeaderAction 
-} from "@/components/layouts/page-header";
+import { RecipeView } from "@/features/recipes/components/recipe-view";
+import { Edit } from "lucide-react";
 
 export default async function RecipeDetailPage({
   params,
@@ -16,7 +16,7 @@ export default async function RecipeDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  
+
   return (
     <div className="flex flex-1 flex-col">
       <div className="p-4 lg:p-6">
@@ -25,12 +25,12 @@ export default async function RecipeDetailPage({
           subtitle="View and manage recipe information"
           backButton={{
             href: paths.app.recipes.getHref(),
-            label: "Back to recipes"
+            label: "Back to recipes",
           }}
           actions={
             <PageHeaderActions>
-              <PageHeaderAction 
-                label="Edit Recipe" 
+              <PageHeaderAction
+                label="Edit Recipe"
                 icon={<Edit className="mr-2 size-4" />}
                 asChild
               >
@@ -59,16 +59,22 @@ function RecipeDetailSkeleton() {
       </div>
       <div className="mt-6 border-t">
         <dl className="divide-y">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt>
-                <Skeleton className="h-5 w-32" />
-              </dt>
-              <dd className="mt-1 sm:col-span-2 sm:mt-0">
-                <Skeleton className="h-5 w-full max-w-md" />
-              </dd>
-            </div>
-          ))}
+          {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            [...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0"
+              >
+                <dt>
+                  <Skeleton className="h-5 w-32" />
+                </dt>
+                <dd className="mt-1 sm:col-span-2 sm:mt-0">
+                  <Skeleton className="h-5 w-full max-w-md" />
+                </dd>
+              </div>
+            ))
+          }
         </dl>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface DetailHeaderProps {
@@ -8,7 +8,12 @@ interface DetailHeaderProps {
   className?: string;
 }
 
-export function DetailHeader({ title, subtitle, children, className }: DetailHeaderProps) {
+export function DetailHeader({
+  title,
+  subtitle,
+  children,
+  className,
+}: DetailHeaderProps) {
   return (
     <div className={cn("px-4 sm:px-0", className)}>
       <h3 className="text-base font-semibold leading-7 text-foreground">

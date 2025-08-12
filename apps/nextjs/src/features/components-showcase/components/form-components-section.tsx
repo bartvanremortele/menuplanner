@@ -1,18 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Form,
   FormControl,
@@ -23,8 +12,19 @@ import {
   FormMessage,
   useForm,
 } from "@/components/ui/form";
-import { ComponentExample } from "./component-example";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod/v4";
+
+import { ComponentExample } from "./component-example";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -37,12 +37,6 @@ const formSchema = z.object({
 });
 
 export function FormComponentsSection() {
-  const [checkedItems, setCheckedItems] = useState({
-    item1: false,
-    item2: true,
-    item3: false,
-  });
-
   const form = useForm({
     schema: formSchema,
     defaultValues: {
@@ -61,7 +55,7 @@ export function FormComponentsSection() {
         title="Input"
         description="Displays a form input field or a component that looks like an input field."
       >
-        <div className="space-y-4 max-w-md">
+        <div className="max-w-md space-y-4">
           <div className="space-y-2">
             <Label htmlFor="default">Default Input</Label>
             <Input id="default" placeholder="Enter text..." />
@@ -86,7 +80,7 @@ export function FormComponentsSection() {
         title="Textarea"
         description="Displays a form textarea or a component that looks like a textarea."
       >
-        <div className="space-y-4 max-w-md">
+        <div className="max-w-md space-y-4">
           <div className="space-y-2">
             <Label htmlFor="bio">Bio</Label>
             <Textarea
@@ -111,7 +105,7 @@ export function FormComponentsSection() {
         title="Select"
         description="Displays a list of options for the user to pick from—triggered by a button."
       >
-        <div className="space-y-4 max-w-md">
+        <div className="max-w-md space-y-4">
           <div className="space-y-2">
             <Label htmlFor="framework">Framework</Label>
             <Select>
@@ -160,13 +154,19 @@ export function FormComponentsSection() {
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="marketing" defaultChecked />
-            <Label htmlFor="marketing" className="text-sm font-medium leading-none">
+            <Label
+              htmlFor="marketing"
+              className="text-sm font-medium leading-none"
+            >
               Receive marketing emails
             </Label>
           </div>
           <div className="flex items-center space-x-2">
             <Checkbox id="disabled-check" disabled />
-            <Label htmlFor="disabled-check" className="text-sm font-medium leading-none opacity-70">
+            <Label
+              htmlFor="disabled-check"
+              className="text-sm font-medium leading-none opacity-70"
+            >
               Disabled checkbox
             </Label>
           </div>
@@ -179,7 +179,10 @@ export function FormComponentsSection() {
         description="Building forms with React Hook Form and Zod validation."
       >
         <Form {...form}>
-          <form onSubmit={form.handleSubmit((data) => console.log(data))} className="space-y-6 max-w-md">
+          <form
+            onSubmit={form.handleSubmit((data) => console.log(data))}
+            className="max-w-md space-y-6"
+          >
             <FormField
               control={form.control}
               name="username"
@@ -203,7 +206,11 @@ export function FormComponentsSection() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="john@example.com" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="john@example.com"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -235,7 +242,10 @@ export function FormComponentsSection() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Role</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a role" />
@@ -263,9 +273,7 @@ export function FormComponentsSection() {
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormLabel>
-                      Email notifications
-                    </FormLabel>
+                    <FormLabel>Email notifications</FormLabel>
                     <FormDescription>
                       Receive emails about your account activity.
                     </FormDescription>

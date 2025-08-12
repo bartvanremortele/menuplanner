@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Upload, X, Loader2 } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
-import { supabase } from "@/lib/supabase"
-import { toast } from "sonner"
-import { useCreateRecipeImageUrl } from "@/features/recipes/api/use-upload"
+import * as React from "react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useCreateRecipeImageUrl } from "@/features/recipes/api/use-upload";
+import { supabase } from "@/lib/supabase";
+import { cn } from "@/lib/utils";
+import { Loader2, Upload, X } from "lucide-react";
+import { toast } from "sonner";
 
 interface ImageUploadProps {
-  value?: string
-  onChange: (value: string | undefined) => void
-  className?: string
-  disabled?: boolean
-  recipeId?: string
+  value?: string;
+  onChange: (value: string | undefined) => void;
+  className?: string;
+  disabled?: boolean;
+  recipeId?: string;
 }
 
 export function ImageUpload({
@@ -25,79 +25,83 @@ export function ImageUpload({
   disabled,
   recipeId,
 }: ImageUploadProps) {
-  const [preview, setPreview] = React.useState<string | undefined>(value)
-  const [isUploading, setIsUploading] = React.useState(false)
-  const fileInputRef = React.useRef<HTMLInputElement>(null)
-  const createImageUrl = useCreateRecipeImageUrl()
+  const [preview, setPreview] = React.useState<string | undefined>(value);
+  const [isUploading, setIsUploading] = React.useState(false);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const createImageUrl = useCreateRecipeImageUrl();
 
   // If value is an imageKey, construct the full URL
   React.useEffect(() => {
-    if (value && !value.startsWith('http') && !value.startsWith('data:')) {
+    if (value && !value.startsWith("http") && !value.startsWith("data:")) {
       const publicUrl = supabase.storage
-        .from('recipe-images')
-        .getPublicUrl(value).data.publicUrl
-      setPreview(publicUrl)
+        .from("recipe-images")
+        .getPublicUrl(value).data.publicUrl;
+      setPreview(publicUrl);
     } else {
-      setPreview(value)
+      setPreview(value);
     }
-  }, [value])
+  }, [value]);
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (!file) return
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
 
     // For new recipes, generate a temporary ID
-    const uploadRecipeId = recipeId || crypto.randomUUID()
+    const uploadRecipeId = recipeId ?? crypto.randomUUID();
 
-    setIsUploading(true)
+    setIsUploading(true);
 
     try {
       // Get signed upload URL from server
-      const { uploadUrl, path, token } = await createImageUrl.mutateAsync({
+      const { uploadUrl, path } = await createImageUrl.mutateAsync({
         recipeId: uploadRecipeId,
         contentType: file.type,
-      })
+      });
 
       // Upload directly to Supabase Storage using the signed URL
       const uploadResponse = await fetch(uploadUrl, {
-        method: 'PUT',
+        method: "PUT",
         body: file,
         headers: {
-          'Content-Type': file.type,
+          "Content-Type": file.type,
         },
-      })
+      });
 
       if (!uploadResponse.ok) {
-        throw new Error('Failed to upload image')
+        throw new Error("Failed to upload image");
       }
 
       // Get the public URL for preview
-      const { data: { publicUrl } } = supabase.storage
-        .from('recipe-images')
-        .getPublicUrl(path)
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("recipe-images").getPublicUrl(path);
 
-      setPreview(publicUrl)
-      onChange(path) // Store the path, not the full URL
-      toast.success('Image uploaded successfully')
-    } catch (error: any) {
-      console.error('Upload error:', error)
-      toast.error(error.message || 'Failed to upload image')
+      setPreview(publicUrl);
+      onChange(path); // Store the path, not the full URL
+      toast.success("Image uploaded successfully");
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Failed to upload image",
+      );
     } finally {
-      setIsUploading(false)
+      setIsUploading(false);
     }
-  }
+  };
 
   const handleRemove = () => {
-    setPreview(undefined)
-    onChange(undefined)
+    setPreview(undefined);
+    onChange(undefined);
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""
+      fileInputRef.current.value = "";
     }
-  }
+  };
 
   const handleClick = () => {
-    fileInputRef.current?.click()
-  }
+    fileInputRef.current?.click();
+  };
 
   return (
     <div className={cn("space-y-4", className)}>
@@ -112,16 +116,18 @@ export function ImageUpload({
 
       {preview ? (
         <div className="relative">
-          <img
+          <Image
             src={preview}
             alt="Recipe preview"
-            className="w-full h-64 object-cover rounded-lg"
+            width={800}
+            height={256}
+            className="h-64 w-full rounded-lg object-cover"
           />
           <Button
             type="button"
             variant="destructive"
             size="icon"
-            className="absolute top-2 right-2"
+            className="absolute right-2 top-2"
             onClick={handleRemove}
             disabled={disabled}
           >
@@ -132,12 +138,12 @@ export function ImageUpload({
         <button
           type="button"
           onClick={handleClick}
-          disabled={disabled || isUploading}
-          className="w-full h-64 border-2 border-dashed border-muted-foreground/25 rounded-lg flex flex-col items-center justify-center gap-2 hover:border-muted-foreground/50 transition-colors"
+          disabled={disabled === true || isUploading === true}
+          className="flex h-64 w-full flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-muted-foreground/25 transition-colors hover:border-muted-foreground/50"
         >
           {isUploading ? (
             <>
-              <Loader2 className="h-10 w-10 text-muted-foreground animate-spin" />
+              <Loader2 className="h-10 w-10 animate-spin text-muted-foreground" />
               <span className="text-sm text-muted-foreground">
                 Uploading...
               </span>
@@ -153,5 +159,5 @@ export function ImageUpload({
         </button>
       )}
     </div>
-  )
+  );
 }

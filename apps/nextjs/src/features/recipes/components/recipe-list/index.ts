@@ -1,3 +1,3 @@
-export * from './recipe-list';
-export * from './recipe-card';
-export * from './recipe-table';
+export * from "./recipe-list";
+export * from "./recipe-card";
+export * from "./recipe-table";

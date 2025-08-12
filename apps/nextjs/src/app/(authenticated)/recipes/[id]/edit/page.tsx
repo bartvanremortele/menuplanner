@@ -1,9 +1,6 @@
-import Link from "next/link";
 import { Suspense } from "react";
-import { IconArrowLeft } from "@tabler/icons-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { paths } from "@/config/paths";
 import {
   Card,
   CardContent,
@@ -11,13 +8,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { paths } from "@/config/paths";
 import { RecipeUpdate } from "@/features/recipes/components/recipe-update";
+import { IconArrowLeft } from "@tabler/icons-react";
 
-export default function EditRecipePage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function EditRecipePage({ params }: { params: { id: string } }) {
   return (
     <div className="flex-1 space-y-4 p-4 md:p-6">
       <div className="flex items-center gap-4">
@@ -32,9 +28,7 @@ export default function EditRecipePage({
       <Card>
         <CardHeader>
           <CardTitle>Recipe Details</CardTitle>
-          <CardDescription>
-            Update your recipe information
-          </CardDescription>
+          <CardDescription>Update your recipe information</CardDescription>
         </CardHeader>
         <CardContent>
           <Suspense fallback={<EditRecipeSkeleton />}>

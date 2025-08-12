@@ -28,17 +28,6 @@ export const ingredientRouter = {
       });
     }),
 
-  byIds: protectedProcedure
-    .input(z.object({ ids: z.array(z.string().uuid()) }))
-    .query(({ ctx, input }) => {
-      if (input.ids.length === 0) {
-        return [];
-      }
-      return ctx.db.query.Ingredient.findMany({
-        where: (ingredient, { inArray }) => inArray(ingredient.id, input.ids),
-      });
-    }),
-
   search: protectedProcedure
     .input(z.object({ query: z.string() }))
     .query(({ ctx, input }) => {
@@ -48,7 +37,7 @@ export const ingredientRouter = {
           orderBy: desc(Ingredient.id),
         });
       }
-      
+
       return ctx.db.query.Ingredient.findMany({
         where: ilike(Ingredient.name, `%${input.query}%`),
         limit: 50,

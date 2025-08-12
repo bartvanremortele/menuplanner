@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/auth/server";
 import { AppSidebar } from "@/components/layouts/app-sidebar";
-import { SiteHeader } from "@/components/layouts/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { paths } from "@/config/paths";
 

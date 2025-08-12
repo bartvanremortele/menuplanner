@@ -1,10 +1,10 @@
 "use client";
 
-import { Table } from "@tanstack/react-table";
-import { IconX } from "@tabler/icons-react";
-
+import type { Table } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { IconX } from "@tabler/icons-react";
+
 import { DataTableViewOptions } from "./data-table-view-options";
 
 interface DataTableToolbarProps<TData> {
@@ -24,7 +24,9 @@ export function DataTableToolbar<TData>({
         {searchKey && (
           <Input
             placeholder={`Filter ${searchKey}...`}
-            value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
+            value={
+              (table.getColumn(searchKey)?.getFilterValue() as string) || ""
+            }
             onChange={(event) =>
               table.getColumn(searchKey)?.setFilterValue(event.target.value)
             }

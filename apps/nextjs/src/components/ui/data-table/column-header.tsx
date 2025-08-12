@@ -1,14 +1,9 @@
 "use client";
 
-import { Column } from "@tanstack/react-table";
-import {
-  IconArrowDown,
-  IconArrowUp,
-  IconSelector,
-} from "@tabler/icons-react";
-
-import { cn } from "@/lib/utils";
+import type { Column } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { IconArrowDown, IconArrowUp, IconSelector } from "@tabler/icons-react";
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {

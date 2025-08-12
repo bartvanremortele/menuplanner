@@ -1,11 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown, X } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import * as React from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -13,25 +10,27 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { Check, ChevronsUpDown, X } from "lucide-react";
 
 export interface MultiSelectOption {
-  value: string | number
-  label: string
+  value: string | number;
+  label: string;
 }
 
 interface MultiSelectProps {
-  options: MultiSelectOption[]
-  selected: (string | number)[]
-  onChange: (selected: (string | number)[]) => void
-  placeholder?: string
-  className?: string
-  disabled?: boolean
+  options: MultiSelectOption[];
+  selected: (string | number)[];
+  onChange: (selected: (string | number)[]) => void;
+  placeholder?: string;
+  className?: string;
+  disabled?: boolean;
 }
 
 export function MultiSelect({
@@ -42,23 +41,23 @@ export function MultiSelect({
   className,
   disabled,
 }: MultiSelectProps) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
   const handleSelect = (value: string | number) => {
     const newSelected = selected.includes(value)
       ? selected.filter((item) => item !== value)
-      : [...selected, value]
-    onChange(newSelected)
-  }
+      : [...selected, value];
+    onChange(newSelected);
+  };
 
   const handleRemove = (value: string | number) => {
-    onChange(selected.filter((item) => item !== value))
-  }
+    onChange(selected.filter((item) => item !== value));
+  };
 
   const selectedLabels = selected.map((value) => {
-    const option = options.find((opt) => opt.value === value)
-    return option ? option.label : value
-  })
+    const option = options.find((opt) => opt.value === value);
+    return option ? option.label : value;
+  });
 
   return (
     <div className={cn("flex flex-col gap-2", className)}>
@@ -95,7 +94,9 @@ export function MultiSelect({
                     <Check
                       className={cn(
                         "ml-auto h-4 w-4",
-                        selected.includes(option.value) ? "opacity-100" : "opacity-0"
+                        selected.includes(option.value)
+                          ? "opacity-100"
+                          : "opacity-0",
                       )}
                     />
                   </CommandItem>
@@ -105,7 +106,7 @@ export function MultiSelect({
           </Command>
         </PopoverContent>
       </Popover>
-      
+
       {selected.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {selected.map((value, index) => (
@@ -123,5 +124,5 @@ export function MultiSelect({
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -90,7 +89,7 @@ export function UIComponentsSection() {
               <CardDescription>Card description goes here.</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-sm text-muted-foreground">
                 This is the card content. You can put any content here.
               </p>
             </CardContent>
@@ -104,7 +103,7 @@ export function UIComponentsSection() {
               <CardTitle>Simple Card</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-sm text-muted-foreground">
                 A simpler card without footer.
               </p>
             </CardContent>
@@ -150,11 +149,11 @@ export function UIComponentsSection() {
       >
         <div className="space-y-4">
           <div>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-sm text-muted-foreground">
               Content above separator
             </p>
             <Separator className="my-4" />
-            <p className="text-muted-foreground text-sm">
+            <p className="text-sm text-muted-foreground">
               Content below separator
             </p>
           </div>

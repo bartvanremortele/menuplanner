@@ -1,11 +1,13 @@
 "use client";
 
+import type { z } from "zod/v4";
 import { useRouter } from "next/navigation";
-import { useCreateRecipe } from "@/features/recipes/api/use-recipes";
-import { RecipeForm } from "../recipe-form";
 import { paths } from "@/config/paths";
-import { z } from "zod/v4";
-import { CreateRecipeInputSchema } from "@menuplanner/validators";
+import { useCreateRecipe } from "@/features/recipes/api/use-recipes";
+
+import type { CreateRecipeInputSchema } from "@menuplanner/validators";
+
+import { RecipeForm } from "../recipe-form";
 
 type RecipeFormData = z.infer<typeof CreateRecipeInputSchema>;
 

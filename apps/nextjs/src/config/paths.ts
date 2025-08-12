@@ -1,28 +1,28 @@
 export const paths = {
   home: {
-    getHref: () => '/',
+    getHref: () => "/",
   },
 
   auth: {
     login: {
-      getHref: (redirectTo?: string | null | undefined) =>
-        `/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
+      getHref: (redirectTo?: string | null) =>
+        `/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`,
     },
     register: {
-      getHref: (redirectTo?: string | null | undefined) =>
-        `/register${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
+      getHref: (redirectTo?: string | null) =>
+        `/register${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`,
     },
   },
 
   app: {
     root: {
-      getHref: () => '/dashboard',
+      getHref: () => "/dashboard",
     },
     dashboard: {
-      getHref: () => '/dashboard',
+      getHref: () => "/dashboard",
     },
     recipes: {
-      getHref: () => '/recipes',
+      getHref: () => "/recipes",
       detail: {
         getHref: (id: string) => `/recipes/${id}`,
       },
@@ -30,11 +30,11 @@ export const paths = {
         getHref: (id: string) => `/recipes/${id}/edit`,
       },
       new: {
-        getHref: () => '/recipes/new',
+        getHref: () => "/recipes/new",
       },
     },
     ingredients: {
-      getHref: () => '/ingredients',
+      getHref: () => "/ingredients",
       detail: {
         getHref: (id: string | number) => `/ingredients/${id}`,
       },
@@ -42,11 +42,11 @@ export const paths = {
         getHref: (id: string | number) => `/ingredients/${id}/edit`,
       },
       new: {
-        getHref: () => '/ingredients/new',
+        getHref: () => "/ingredients/new",
       },
     },
     mealPlans: {
-      getHref: () => '/meal-plans',
+      getHref: () => "/meal-plans",
       detail: {
         getHref: (id: string) => `/meal-plans/${id}`,
       },
@@ -54,11 +54,11 @@ export const paths = {
         getHref: (id: string) => `/meal-plans/${id}/edit`,
       },
       new: {
-        getHref: () => '/meal-plans/new',
+        getHref: () => "/meal-plans/new",
       },
     },
     shoppingLists: {
-      getHref: () => '/shopping-lists',
+      getHref: () => "/shopping-lists",
       detail: {
         getHref: (id: string) => `/shopping-lists/${id}`,
       },
@@ -66,13 +66,13 @@ export const paths = {
         getHref: (id: string) => `/shopping-lists/${id}/edit`,
       },
       new: {
-        getHref: () => '/shopping-lists/new',
+        getHref: () => "/shopping-lists/new",
       },
     },
     profile: {
-      getHref: () => '/profile',
+      getHref: () => "/profile",
       settings: {
-        getHref: () => '/profile/settings',
+        getHref: () => "/profile/settings",
       },
     },
   },

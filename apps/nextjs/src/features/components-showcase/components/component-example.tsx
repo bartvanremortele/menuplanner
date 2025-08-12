@@ -1,4 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface ComponentExampleProps {
   title: string;
@@ -6,7 +12,11 @@ interface ComponentExampleProps {
   children: React.ReactNode;
 }
 
-export function ComponentExample({ title, description, children }: ComponentExampleProps) {
+export function ComponentExample({
+  title,
+  description,
+  children,
+}: ComponentExampleProps) {
   return (
     <Card>
       <CardHeader>

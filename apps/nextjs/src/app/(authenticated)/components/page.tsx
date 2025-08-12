@@ -1,15 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import { Suspense } from "react";
-import { 
+import {
   PageHeader,
   PageHeaderMeta,
   PageHeaderMetaItem,
-  PageHeaderActions,
-  PageHeaderAction
 } from "@/components/layouts/page-header";
-import { Calendar, Package } from "lucide-react";
 import { ComponentsShowcase } from "@/features/components-showcase";
+import { Calendar, Package } from "lucide-react";
 
 export default function ComponentsPage() {
   return (
@@ -24,7 +23,7 @@ export default function ComponentsPage() {
           </PageHeaderMeta>
         }
       />
-      
+
       <Suspense fallback={<ComponentsShowcaseSkeleton />}>
         <ComponentsShowcase />
       </Suspense>
@@ -40,7 +39,10 @@ function ComponentsShowcaseSkeleton() {
           <div className="h-8 w-48 animate-pulse rounded bg-muted" />
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {[...Array(6)].map((_, j) => (
-              <div key={j} className="h-32 animate-pulse rounded-lg border bg-muted/10" />
+              <div
+                key={j}
+                className="h-32 animate-pulse rounded-lg border bg-muted/10"
+              />
             ))}
           </div>
         </div>

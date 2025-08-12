@@ -1,8 +1,8 @@
 import React from "react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { ArrowLeft } from "lucide-react";
 
 export interface PageHeaderProps {
   title: string;
@@ -30,7 +30,7 @@ export function PageHeader({
         <h2 className="text-2xl/7 font-bold text-foreground sm:truncate sm:text-3xl sm:tracking-tight">
           {title}
         </h2>
-        {(subtitle || meta) && (
+        {(subtitle ?? meta) && (
           <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
             {subtitle && (
               <p className="text-sm text-muted-foreground">{subtitle}</p>
@@ -39,11 +39,7 @@ export function PageHeader({
           </div>
         )}
       </div>
-      {actions && (
-        <div className="mt-5 flex lg:mt-0 lg:ml-4">
-          {actions}
-        </div>
-      )}
+      {actions && <div className="mt-5 flex lg:ml-4 lg:mt-0">{actions}</div>}
     </>
   );
 
@@ -53,7 +49,7 @@ export function PageHeader({
         <Button variant="ghost" size="icon" asChild>
           <Link href={backButton.href}>
             <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">{backButton.label || "Go back"}</span>
+            <span className="sr-only">{backButton.label ?? "Go back"}</span>
           </Link>
         </Button>
         <div className="flex-1 lg:flex lg:items-center lg:justify-between">
@@ -64,7 +60,9 @@ export function PageHeader({
   }
 
   return (
-    <div className={cn("lg:flex lg:items-center lg:justify-between", className)}>
+    <div
+      className={cn("lg:flex lg:items-center lg:justify-between", className)}
+    >
       {content}
     </div>
   );

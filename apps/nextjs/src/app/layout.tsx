@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-
-import { cn } from "@/lib/utils";
-import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "@/components/ui/theme";
 import { Toaster } from "@/components/ui/toast";
+import { cn } from "@/lib/utils";
+import { TRPCReactProvider } from "@/trpc/react";
 
 import "@/app/globals.css";
 
@@ -52,7 +51,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "bg-background text-foreground min-h-screen font-sans antialiased",
+          "min-h-screen bg-background font-sans text-foreground antialiased",
           geistSans.variable,
           geistMono.variable,
         )}

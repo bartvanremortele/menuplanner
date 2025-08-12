@@ -1,8 +1,5 @@
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
-import { paths } from "@/config/paths";
 import {
   Card,
   CardContent,
@@ -10,7 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { paths } from "@/config/paths";
 import { RecipeCreate } from "@/features/recipes/components/recipe-create";
+import { ChevronLeft } from "lucide-react";
 
 export default function NewRecipePage() {
   return (
@@ -22,13 +21,15 @@ export default function NewRecipePage() {
           </Link>
         </Button>
         <div className="flex-1">
-          <h2 className="text-3xl font-bold tracking-tight">Create New Recipe</h2>
+          <h2 className="text-3xl font-bold tracking-tight">
+            Create New Recipe
+          </h2>
           <p className="text-muted-foreground">
             Add a new recipe to your collection
           </p>
         </div>
       </div>
-      
+
       <Card>
         <CardHeader>
           <CardTitle>Recipe Details</CardTitle>

@@ -1,21 +1,22 @@
-import { 
-  PageHeader, 
-  PageHeaderMeta, 
-  PageHeaderMetaItem,
-  PageHeaderActions,
-  PageHeaderAction 
-} from "./";
-import { 
-  Briefcase, 
-  MapPin, 
-  DollarSign, 
+import Link from "next/link";
+import {
+  Briefcase,
   Calendar,
+  Check,
+  DollarSign,
   Edit,
   Link2,
-  Check,
-  Plus
+  MapPin,
+  Plus,
 } from "lucide-react";
-import Link from "next/link";
+
+import {
+  PageHeader,
+  PageHeaderAction,
+  PageHeaderActions,
+  PageHeaderMeta,
+  PageHeaderMetaItem,
+} from "./";
 
 // Example 1: Job listing header (like the original example)
 export function JobListingHeaderExample() {
@@ -27,23 +28,26 @@ export function JobListingHeaderExample() {
           <PageHeaderMetaItem icon={Briefcase} label="Full-time" />
           <PageHeaderMetaItem icon={MapPin} label="Remote" />
           <PageHeaderMetaItem icon={DollarSign} label="$120k – $140k" />
-          <PageHeaderMetaItem icon={Calendar} label="Closing on January 9, 2020" />
+          <PageHeaderMetaItem
+            icon={Calendar}
+            label="Closing on January 9, 2020"
+          />
         </PageHeaderMeta>
       }
       actions={
         <PageHeaderActions>
-          <PageHeaderAction 
-            label="Edit" 
+          <PageHeaderAction
+            label="Edit"
             icon={<Edit className="mr-2 size-5" />}
             onClick={() => console.log("Edit clicked")}
           />
-          <PageHeaderAction 
-            label="View" 
+          <PageHeaderAction
+            label="View"
             icon={<Link2 className="mr-2 size-5" />}
             href="/view"
           />
-          <PageHeaderAction 
-            label="Publish" 
+          <PageHeaderAction
+            label="Publish"
             icon={<Check className="mr-2 size-5" />}
             variant="default"
             onClick={() => console.log("Publish clicked")}
@@ -62,8 +66,8 @@ export function RecipeListHeaderExample() {
       subtitle="Manage your recipe collection"
       actions={
         <PageHeaderActions>
-          <PageHeaderAction 
-            label="New Recipe" 
+          <PageHeaderAction
+            label="New Recipe"
             icon={<Plus className="mr-2 size-4" />}
             variant="default"
             asChild
@@ -89,13 +93,13 @@ export function RecipeDetailHeaderExample() {
       }
       actions={
         <PageHeaderActions>
-          <PageHeaderAction 
-            label="Edit Recipe" 
+          <PageHeaderAction
+            label="Edit Recipe"
             icon={<Edit className="mr-2 size-4" />}
             href="/recipes/123/edit"
           />
-          <PageHeaderAction 
-            label="Delete" 
+          <PageHeaderAction
+            label="Delete"
             variant="destructive"
             onClick={() => console.log("Delete clicked")}
           />

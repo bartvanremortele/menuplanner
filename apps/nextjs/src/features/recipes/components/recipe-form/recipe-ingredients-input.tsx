@@ -1,35 +1,46 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Plus, X } from "lucide-react"
-import { useFieldArray, useFormContext } from "react-hook-form"
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { FormSection } from "@/components/ui/form-section";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useGetUnits } from "@/features/recipes/api/use-recipes";
+import { Plus, X } from "lucide-react";
+import { useFieldArray, useFormContext } from "react-hook-form";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { IngredientSelect } from "./ingredient-select"
-import { useGetUnits } from "@/features/recipes/api/use-recipes"
-import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { FormSection } from "@/components/ui/form-section"
+import { IngredientSelect } from "./ingredient-select";
 
 export function RecipeIngredientsInput() {
-  const { control } = useFormContext()
+  const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "ingredients",
-  })
+  });
 
-  const { data: units } = useGetUnits()
+  const { data: units } = useGetUnits();
 
   const handleAddIngredient = () => {
-    append({ ingredientId: undefined, amount: 1, unitAbbr: "g" })
-  }
+    append({ ingredientId: undefined, amount: 1, unitAbbr: "g" });
+  };
 
   const handleAddMultiple = () => {
-    append({ ingredientId: undefined, amount: 1, unitAbbr: "g" })
-    append({ ingredientId: undefined, amount: 1, unitAbbr: "g" })
-    append({ ingredientId: undefined, amount: 1, unitAbbr: "g" })
-  }
+    append({ ingredientId: undefined, amount: 1, unitAbbr: "g" });
+    append({ ingredientId: undefined, amount: 1, unitAbbr: "g" });
+    append({ ingredientId: undefined, amount: 1, unitAbbr: "g" });
+  };
 
   return (
     <FormSection
@@ -58,10 +69,9 @@ export function RecipeIngredientsInput() {
         </>
       }
     >
-
       <div className="space-y-3">
         {fields.map((field, index) => (
-          <div key={field.id} className="flex gap-2 items-start">
+          <div key={field.id} className="flex items-start gap-2">
             <FormField
               control={control}
               name={`ingredients.${index}.ingredientId`}
@@ -69,7 +79,7 @@ export function RecipeIngredientsInput() {
                 <FormItem className="flex-1">
                   <FormControl>
                     <IngredientSelect
-                      value={field.value}
+                      value={field.value as string}
                       onChange={field.onChange}
                       placeholder="Select ingredient..."
                     />
@@ -91,7 +101,9 @@ export function RecipeIngredientsInput() {
                       min="0"
                       placeholder="Amount"
                       {...field}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                      onChange={(e) =>
+                        field.onChange(parseFloat(e.target.value))
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -104,7 +116,10 @@ export function RecipeIngredientsInput() {
               name={`ingredients.${index}.unitAbbr`}
               render={({ field }) => (
                 <FormItem className="w-32">
-                  <Select value={field.value} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value as string}
+                    onValueChange={field.onChange}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Unit" />
@@ -136,10 +151,10 @@ export function RecipeIngredientsInput() {
       </div>
 
       {fields.length === 0 && (
-        <div className="text-center py-6 text-muted-foreground">
+        <div className="py-6 text-center text-muted-foreground">
           No ingredients added yet. Click "Add Ingredient" to start.
         </div>
       )}
     </FormSection>
-  )
+  );
 }

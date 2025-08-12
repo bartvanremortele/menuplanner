@@ -2,6 +2,7 @@
 
 import type { QueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { env } from "@/config/env";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
@@ -14,7 +15,6 @@ import SuperJSON from "superjson";
 
 import type { AppRouter } from "@menuplanner/api";
 
-import { env } from "@/config/env";
 import { createQueryClient } from "./query-client";
 
 let clientQueryClientSingleton: QueryClient | undefined;
