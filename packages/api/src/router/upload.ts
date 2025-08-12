@@ -1,6 +1,6 @@
 import type { TRPCRouterRecord } from "@trpc/server";
-import { z } from "zod/v4";
 import { createClient } from "@supabase/supabase-js";
+import { z } from "zod/v4";
 
 import { protectedProcedure } from "../trpc";
 
@@ -16,18 +16,18 @@ export const uploadRouter = {
       z.object({
         recipeId: z.string().uuid(),
         contentType: z.string(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { recipeId, contentType } = input;
 
       // Use recipe ID as both folder and filename for easy management
-      const fileExt = contentType.split('/').pop() || 'jpg';
+      const fileExt = contentType.split("/").pop() || "jpg";
       const fileName = `${recipeId}/${recipeId}.${fileExt}`;
-      
+
       // Create a signed URL for uploading
       const { data, error } = await supabase.storage
-        .from('recipe-images')
+        .from("recipe-images")
         .createSignedUploadUrl(fileName);
 
       if (error) {

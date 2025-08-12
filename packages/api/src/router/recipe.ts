@@ -1,12 +1,16 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod/v4";
 
+import { desc, eq } from "@menuplanner/db";
 import {
-  desc,
-  eq,
-} from "@menuplanner/db";
-import { Recipe, RecipeIngredient, RecipeLabelConnection } from "@menuplanner/db/schema";
-import { CreateRecipeInputSchema, UpdateRecipeInputSchema } from "@menuplanner/validators";
+  Recipe,
+  RecipeIngredient,
+  RecipeLabelConnection,
+} from "@menuplanner/db/schema";
+import {
+  CreateRecipeInputSchema,
+  UpdateRecipeInputSchema,
+} from "@menuplanner/validators";
 
 import { protectedProcedure } from "../trpc";
 
@@ -56,40 +60,43 @@ export const recipeRouter = {
     .input(CreateRecipeInputSchema)
     .mutation(async ({ ctx, input }) => {
       const { ingredients, labelIds, ...recipeData } = input;
-      
+
       // Create the recipe first
-      const [recipe] = await ctx.db.insert(Recipe).values({
-        ...recipeData,
-        createdByUserId: ctx.session.user.id,
-      }).returning();
-      
+      const [recipe] = await ctx.db
+        .insert(Recipe)
+        .values({
+          ...recipeData,
+          createdByUserId: ctx.session.user.id,
+        })
+        .returning();
+
       if (!recipe) {
         throw new Error("Failed to create recipe");
       }
-      
+
       // Add ingredients if provided
       if (ingredients && ingredients.length > 0) {
         await ctx.db.insert(RecipeIngredient).values(
-          ingredients.map(ing => ({
+          ingredients.map((ing) => ({
             recipeId: recipe.id,
             ingredientId: ing.ingredientId,
             amount: ing.amount,
             unitAbbr: ing.unitAbbr,
-          }))
+          })),
         );
       }
-      
+
       // Add labels if provided
       if (labelIds && labelIds.length > 0) {
         await ctx.db.insert(RecipeLabelConnection).values(
-          labelIds.map(labelId => ({
+          labelIds.map((labelId) => ({
             recipeId: recipe.id,
             labelId,
             assignedByUserId: ctx.session.user.id,
-          }))
+          })),
         );
       }
-      
+
       // Return the recipe with its relationships
       return ctx.db.query.Recipe.findFirst({
         where: eq(Recipe.id, recipe.id),
@@ -113,7 +120,7 @@ export const recipeRouter = {
     .input(UpdateRecipeInputSchema)
     .mutation(async ({ ctx, input }) => {
       const { id, ingredients, labelIds, ...recipeData } = input;
-      
+
       // Update the recipe
       await ctx.db
         .update(Recipe)
@@ -122,42 +129,46 @@ export const recipeRouter = {
           updatedAt: new Date(),
         })
         .where(eq(Recipe.id, id));
-      
+
       // Update ingredients if provided
       if (ingredients !== undefined) {
         // Remove existing ingredients
-        await ctx.db.delete(RecipeIngredient).where(eq(RecipeIngredient.recipeId, id));
-        
+        await ctx.db
+          .delete(RecipeIngredient)
+          .where(eq(RecipeIngredient.recipeId, id));
+
         // Add new ingredients
         if (ingredients.length > 0) {
           await ctx.db.insert(RecipeIngredient).values(
-            ingredients.map(ing => ({
+            ingredients.map((ing) => ({
               recipeId: id,
               ingredientId: ing.ingredientId,
               amount: ing.amount,
               unitAbbr: ing.unitAbbr,
-            }))
+            })),
           );
         }
       }
-      
+
       // Update labels if provided
       if (labelIds !== undefined) {
         // Remove existing labels
-        await ctx.db.delete(RecipeLabelConnection).where(eq(RecipeLabelConnection.recipeId, id));
-        
+        await ctx.db
+          .delete(RecipeLabelConnection)
+          .where(eq(RecipeLabelConnection.recipeId, id));
+
         // Add new labels
         if (labelIds.length > 0) {
           await ctx.db.insert(RecipeLabelConnection).values(
-            labelIds.map(labelId => ({
+            labelIds.map((labelId) => ({
               recipeId: id,
               labelId,
               assignedByUserId: ctx.session.user.id,
-            }))
+            })),
           );
         }
       }
-      
+
       // Return the updated recipe with its relationships
       return ctx.db.query.Recipe.findFirst({
         where: eq(Recipe.id, id),

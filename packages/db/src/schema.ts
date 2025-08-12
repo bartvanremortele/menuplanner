@@ -1,4 +1,4 @@
-import { sql, relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { pgTable, primaryKey } from "drizzle-orm/pg-core";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import { z } from "zod/v4";
@@ -203,34 +203,40 @@ export const labelRelations = relations(Label, ({ many }) => ({
   recipes: many(RecipeLabelConnection),
 }));
 
-export const recipeLabelConnectionRelations = relations(RecipeLabelConnection, ({ one }) => ({
-  recipe: one(Recipe, {
-    fields: [RecipeLabelConnection.recipeId],
-    references: [Recipe.id],
+export const recipeLabelConnectionRelations = relations(
+  RecipeLabelConnection,
+  ({ one }) => ({
+    recipe: one(Recipe, {
+      fields: [RecipeLabelConnection.recipeId],
+      references: [Recipe.id],
+    }),
+    label: one(Label, {
+      fields: [RecipeLabelConnection.labelId],
+      references: [Label.id],
+    }),
   }),
-  label: one(Label, {
-    fields: [RecipeLabelConnection.labelId],
-    references: [Label.id],
-  }),
-}));
+);
 
 export const ingredientRelations = relations(Ingredient, ({ many }) => ({
   recipes: many(RecipeIngredient),
 }));
 
-export const recipeIngredientRelations = relations(RecipeIngredient, ({ one }) => ({
-  recipe: one(Recipe, {
-    fields: [RecipeIngredient.recipeId],
-    references: [Recipe.id],
+export const recipeIngredientRelations = relations(
+  RecipeIngredient,
+  ({ one }) => ({
+    recipe: one(Recipe, {
+      fields: [RecipeIngredient.recipeId],
+      references: [Recipe.id],
+    }),
+    ingredient: one(Ingredient, {
+      fields: [RecipeIngredient.ingredientId],
+      references: [Ingredient.id],
+    }),
+    unit: one(Unit, {
+      fields: [RecipeIngredient.unitAbbr],
+      references: [Unit.abbr],
+    }),
   }),
-  ingredient: one(Ingredient, {
-    fields: [RecipeIngredient.ingredientId],
-    references: [Ingredient.id],
-  }),
-  unit: one(Unit, {
-    fields: [RecipeIngredient.unitAbbr],
-    references: [Unit.abbr],
-  }),
-}));
+);
 
 export * from "./auth-schema";

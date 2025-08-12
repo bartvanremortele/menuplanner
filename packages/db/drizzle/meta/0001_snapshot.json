@@ -39,12 +39,8 @@
           "name": "day_plan_recipe_id_recipe_id_fk",
           "tableFrom": "day_plan",
           "tableTo": "recipe",
-          "columnsFrom": [
-            "recipe_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["recipe_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -52,12 +48,8 @@
           "name": "day_plan_user_id_user_id_fk",
           "tableFrom": "day_plan",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -65,12 +57,8 @@
           "name": "day_plan_label_id_label_id_fk",
           "tableFrom": "day_plan",
           "tableTo": "label",
-          "columnsFrom": [
-            "label_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["label_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -78,11 +66,7 @@
       "compositePrimaryKeys": {
         "day_plan_day_user_id_recipe_id_pk": {
           "name": "day_plan_day_user_id_recipe_id_pk",
-          "columns": [
-            "day",
-            "user_id",
-            "recipe_id"
-          ]
+          "columns": ["day", "user_id", "recipe_id"]
         }
       },
       "uniqueConstraints": {},
@@ -244,9 +228,7 @@
         "label_name_unique": {
           "name": "label_name_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "name"
-          ]
+          "columns": ["name"]
         }
       },
       "policies": {},
@@ -308,12 +290,8 @@
           "name": "recipe_created_by_user_id_user_id_fk",
           "tableFrom": "recipe",
           "tableTo": "user",
-          "columnsFrom": [
-            "created_by_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -323,9 +301,7 @@
         "recipe_name_unique": {
           "name": "recipe_name_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "name"
-          ]
+          "columns": ["name"]
         }
       },
       "policies": {},
@@ -367,12 +343,8 @@
           "name": "recipe_ingredient_recipe_id_recipe_id_fk",
           "tableFrom": "recipe_ingredient",
           "tableTo": "recipe",
-          "columnsFrom": [
-            "recipe_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["recipe_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -380,12 +352,8 @@
           "name": "recipe_ingredient_ingredient_id_ingredient_id_fk",
           "tableFrom": "recipe_ingredient",
           "tableTo": "ingredient",
-          "columnsFrom": [
-            "ingredient_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["ingredient_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -393,12 +361,8 @@
           "name": "recipe_ingredient_unit_abbr_unit_abbr_fk",
           "tableFrom": "recipe_ingredient",
           "tableTo": "unit",
-          "columnsFrom": [
-            "unit_abbr"
-          ],
-          "columnsTo": [
-            "abbr"
-          ],
+          "columnsFrom": ["unit_abbr"],
+          "columnsTo": ["abbr"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -406,10 +370,7 @@
       "compositePrimaryKeys": {
         "recipe_ingredient_recipe_id_ingredient_id_pk": {
           "name": "recipe_ingredient_recipe_id_ingredient_id_pk",
-          "columns": [
-            "recipe_id",
-            "ingredient_id"
-          ]
+          "columns": ["recipe_id", "ingredient_id"]
         }
       },
       "uniqueConstraints": {},
@@ -453,12 +414,8 @@
           "name": "recipe_label_connection_recipe_id_recipe_id_fk",
           "tableFrom": "recipe_label_connection",
           "tableTo": "recipe",
-          "columnsFrom": [
-            "recipe_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["recipe_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -466,12 +423,8 @@
           "name": "recipe_label_connection_label_id_label_id_fk",
           "tableFrom": "recipe_label_connection",
           "tableTo": "label",
-          "columnsFrom": [
-            "label_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["label_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -479,12 +432,8 @@
           "name": "recipe_label_connection_assigned_by_user_id_user_id_fk",
           "tableFrom": "recipe_label_connection",
           "tableTo": "user",
-          "columnsFrom": [
-            "assigned_by_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["assigned_by_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -492,10 +441,7 @@
       "compositePrimaryKeys": {
         "recipe_label_connection_recipe_id_label_id_pk": {
           "name": "recipe_label_connection_recipe_id_label_id_pk",
-          "columns": [
-            "recipe_id",
-            "label_id"
-          ]
+          "columns": ["recipe_id", "label_id"]
         }
       },
       "uniqueConstraints": {},
@@ -557,12 +503,8 @@
           "name": "week_day_config_label_id_label_id_fk",
           "tableFrom": "week_day_config",
           "tableTo": "label",
-          "columnsFrom": [
-            "label_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["label_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -570,12 +512,8 @@
           "name": "week_day_config_user_id_user_id_fk",
           "tableFrom": "week_day_config",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -583,11 +521,7 @@
       "compositePrimaryKeys": {
         "week_day_config_week_day_user_id_label_id_pk": {
           "name": "week_day_config_week_day_user_id_label_id_pk",
-          "columns": [
-            "week_day",
-            "user_id",
-            "label_id"
-          ]
+          "columns": ["week_day", "user_id", "label_id"]
         }
       },
       "uniqueConstraints": {},
@@ -684,12 +618,8 @@
           "name": "account_user_id_user_id_fk",
           "tableFrom": "account",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -759,12 +689,8 @@
           "name": "session_user_id_user_id_fk",
           "tableFrom": "session",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -774,9 +700,7 @@
         "session_token_unique": {
           "name": "session_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token"
-          ]
+          "columns": ["token"]
         }
       },
       "policies": {},
@@ -837,9 +761,7 @@
         "user_email_unique": {
           "name": "user_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},

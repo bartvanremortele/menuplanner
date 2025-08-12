@@ -9,22 +9,30 @@ const BaseRecipeSchema = z.object({
 
 // Create recipe input schema
 export const CreateRecipeInputSchema = BaseRecipeSchema.extend({
-  ingredients: z.array(z.object({
-    ingredientId: z.string().uuid(),
-    amount: z.number().positive(),
-    unitAbbr: z.string().max(10),
-  })).optional(),
+  ingredients: z
+    .array(
+      z.object({
+        ingredientId: z.string().uuid(),
+        amount: z.number().positive(),
+        unitAbbr: z.string().max(10),
+      }),
+    )
+    .optional(),
   labelIds: z.array(z.string().uuid()).optional(),
 });
 
 // Update recipe input schema
 export const UpdateRecipeInputSchema = BaseRecipeSchema.extend({
   id: z.string().uuid(),
-  ingredients: z.array(z.object({
-    ingredientId: z.string().uuid(),
-    amount: z.number().positive(),
-    unitAbbr: z.string().max(10),
-  })).optional(),
+  ingredients: z
+    .array(
+      z.object({
+        ingredientId: z.string().uuid(),
+        amount: z.number().positive(),
+        unitAbbr: z.string().max(10),
+      }),
+    )
+    .optional(),
   labelIds: z.array(z.string().uuid()).optional(),
 });
 

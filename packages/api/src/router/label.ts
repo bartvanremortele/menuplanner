@@ -1,12 +1,7 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod/v4";
 
-import {
-  CreateLabelSchema,
-  desc,
-  eq,
-  ilike,
-} from "@menuplanner/db";
+import { CreateLabelSchema, desc, eq, ilike } from "@menuplanner/db";
 import { Label } from "@menuplanner/db/schema";
 
 import { protectedProcedure } from "../trpc";
@@ -35,7 +30,7 @@ export const labelRouter = {
           orderBy: desc(Label.id),
         });
       }
-      
+
       return ctx.db.query.Label.findMany({
         where: ilike(Label.name, `%${input.query}%`),
         limit: 10,
@@ -49,17 +44,15 @@ export const labelRouter = {
     }),
 
   update: protectedProcedure
-    .input(z.object({
-      id: z.string().uuid(),
-      name: z.string().max(256),
-    }))
+    .input(
+      z.object({
+        id: z.string().uuid(),
+        name: z.string().max(256),
+      }),
+    )
     .mutation(({ ctx, input }) => {
       const { id, ...data } = input;
-      return ctx.db
-        .update(Label)
-        .set(data)
-        .where(eq(Label.id, id))
-        .returning();
+      return ctx.db.update(Label).set(data).where(eq(Label.id, id)).returning();
     }),
 
   delete: protectedProcedure

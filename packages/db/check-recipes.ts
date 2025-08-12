@@ -1,5 +1,6 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
+
 import { Recipe } from "./src/schema";
 
 const connectionString = process.env.POSTGRES_URL!;
@@ -8,16 +9,18 @@ const db = drizzle(sql);
 
 async function checkRecipes() {
   try {
-    const recipes = await db.select({
-      id: Recipe.id,
-      name: Recipe.name,
-    }).from(Recipe).limit(10);
-    
+    const recipes = await db
+      .select({
+        id: Recipe.id,
+        name: Recipe.name,
+      })
+      .from(Recipe)
+      .limit(10);
+
     console.log("Sample recipes with new UUIDs:");
-    recipes.forEach(recipe => {
+    recipes.forEach((recipe) => {
       console.log(`- ${recipe.name}: ${recipe.id}`);
     });
-    
   } catch (error) {
     console.error("Error:", error);
   } finally {
