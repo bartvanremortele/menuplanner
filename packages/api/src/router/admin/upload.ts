@@ -2,27 +2,31 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod/v4";
 
-import { protectedProcedure } from "../trpc";
+import { adminProcedure } from "../../trpc";
 
 // Create Supabase client with service role key (bypasses RLS)
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !supabaseServiceKey) {
+  throw new Error("Missing Supabase environment variables");
+}
 
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 export const uploadRouter = {
-  createRecipeImageUrl: protectedProcedure
+  createRecipeImageUrl: adminProcedure
     .input(
       z.object({
         recipeId: z.string().uuid(),
         contentType: z.string(),
       }),
     )
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const { recipeId, contentType } = input;
 
       // Use recipe ID as both folder and filename for easy management
-      const fileExt = contentType.split("/").pop() || "jpg";
+      const fileExt = contentType.split("/").pop() ?? "jpg";
       const fileName = `${recipeId}/${recipeId}.${fileExt}`;
 
       // Create a signed URL for uploading

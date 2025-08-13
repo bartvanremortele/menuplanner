@@ -22,7 +22,7 @@ import {
 
 export function RecipeTable() {
   const router = useRouter();
-  const { data: recipes } = useGetRecipes();
+  const { data: recipes, isLoading } = useGetRecipes();
   const deleteMutation = useDeleteRecipe();
   const [deleteDialog, setDeleteDialog] = useState<{
     open: boolean;
@@ -73,11 +73,25 @@ export function RecipeTable() {
     ]),
   ];
 
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="h-8 w-[250px] animate-pulse rounded bg-muted" />
+          <div className="h-8 w-[100px] animate-pulse rounded bg-muted" />
+        </div>
+        <div className="rounded-md border">
+          <div className="h-[400px] animate-pulse bg-muted/10" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <DataTable
         columns={columns}
-        data={recipes}
+        data={recipes ?? []}
         searchKey="name"
         onRowClick={(row) =>
           router.push(paths.app.recipes.detail.getHref(row.original.id))

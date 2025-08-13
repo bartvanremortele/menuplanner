@@ -12,10 +12,10 @@ import {
   UpdateRecipeInputSchema,
 } from "@menuplanner/validators";
 
-import { protectedProcedure } from "../trpc";
+import { adminProcedure } from "../../trpc";
 
 export const recipeRouter = {
-  all: protectedProcedure.query(({ ctx }) => {
+  all: adminProcedure.query(({ ctx }) => {
     return ctx.db.query.Recipe.findMany({
       orderBy: desc(Recipe.createdAt),
       limit: 20,
@@ -35,7 +35,7 @@ export const recipeRouter = {
     });
   }),
 
-  byId: protectedProcedure
+  byId: adminProcedure
     .input(z.object({ id: z.string().uuid() }))
     .query(({ ctx, input }) => {
       return ctx.db.query.Recipe.findFirst({
@@ -56,7 +56,7 @@ export const recipeRouter = {
       });
     }),
 
-  create: protectedProcedure
+  create: adminProcedure
     .input(CreateRecipeInputSchema)
     .mutation(async ({ ctx, input }) => {
       const { ingredients, labelIds, ...recipeData } = input;
@@ -116,7 +116,7 @@ export const recipeRouter = {
       });
     }),
 
-  update: protectedProcedure
+  update: adminProcedure
     .input(UpdateRecipeInputSchema)
     .mutation(async ({ ctx, input }) => {
       const { id, ingredients, labelIds, ...recipeData } = input;
@@ -188,9 +188,7 @@ export const recipeRouter = {
       });
     }),
 
-  delete: protectedProcedure
-    .input(z.string().uuid())
-    .mutation(({ ctx, input }) => {
-      return ctx.db.delete(Recipe).where(eq(Recipe.id, input));
-    }),
+  delete: adminProcedure.input(z.string().uuid()).mutation(({ ctx, input }) => {
+    return ctx.db.delete(Recipe).where(eq(Recipe.id, input));
+  }),
 } satisfies TRPCRouterRecord;

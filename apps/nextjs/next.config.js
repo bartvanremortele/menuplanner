@@ -18,6 +18,18 @@ const config = {
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
+
+  /** Configure external image domains */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lsfoenuubgdstybenfrv.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/public/**",
+      },
+    ],
+  },
 };
 
 export default config;

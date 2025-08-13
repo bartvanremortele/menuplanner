@@ -6,7 +6,7 @@ export function useCreateRecipeImageUrl() {
   const trpc = useTRPC();
 
   return useMutation(
-    trpc.upload.createRecipeImageUrl.mutationOptions({
+    trpc.admin.upload.createRecipeImageUrl.mutationOptions({
       onError: (error) => {
         toast.error(`Failed to create upload URL: ${error.message}`);
       },

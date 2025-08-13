@@ -16,7 +16,7 @@ import { RecipeForm } from "../recipe-form";
 type RecipeFormData = z.infer<typeof CreateRecipeInputSchema>;
 
 interface RecipeUpdateProps {
-  recipe?: RouterOutputs["recipe"]["byId"];
+  recipe?: RouterOutputs["admin"]["recipe"]["byId"];
   recipeId?: string;
 }
 

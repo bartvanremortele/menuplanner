@@ -4,16 +4,16 @@ import { z } from "zod/v4";
 import { CreateLabelSchema, desc, eq, ilike } from "@menuplanner/db";
 import { Label } from "@menuplanner/db/schema";
 
-import { protectedProcedure } from "../trpc";
+import { adminProcedure } from "../../trpc";
 
 export const labelRouter = {
-  all: protectedProcedure.query(({ ctx }) => {
+  all: adminProcedure.query(({ ctx }) => {
     return ctx.db.query.Label.findMany({
       orderBy: desc(Label.id),
     });
   }),
 
-  byId: protectedProcedure
+  byId: adminProcedure
     .input(z.object({ id: z.string().uuid() }))
     .query(({ ctx, input }) => {
       return ctx.db.query.Label.findFirst({
@@ -21,7 +21,7 @@ export const labelRouter = {
       });
     }),
 
-  search: protectedProcedure
+  search: adminProcedure
     .input(z.object({ query: z.string() }))
     .query(({ ctx, input }) => {
       if (!input.query) {
@@ -37,13 +37,11 @@ export const labelRouter = {
       });
     }),
 
-  create: protectedProcedure
-    .input(CreateLabelSchema)
-    .mutation(({ ctx, input }) => {
-      return ctx.db.insert(Label).values(input).returning();
-    }),
+  create: adminProcedure.input(CreateLabelSchema).mutation(({ ctx, input }) => {
+    return ctx.db.insert(Label).values(input).returning();
+  }),
 
-  update: protectedProcedure
+  update: adminProcedure
     .input(
       z.object({
         id: z.string().uuid(),
@@ -55,9 +53,7 @@ export const labelRouter = {
       return ctx.db.update(Label).set(data).where(eq(Label.id, id)).returning();
     }),
 
-  delete: protectedProcedure
-    .input(z.string().uuid())
-    .mutation(({ ctx, input }) => {
-      return ctx.db.delete(Label).where(eq(Label.id, input));
-    }),
+  delete: adminProcedure.input(z.string().uuid()).mutation(({ ctx, input }) => {
+    return ctx.db.delete(Label).where(eq(Label.id, input));
+  }),
 } satisfies TRPCRouterRecord;

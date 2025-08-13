@@ -20,6 +20,16 @@ export function initAuth(options: {
     }),
     baseURL: options.baseUrl,
     secret: options.secret,
+    user: {
+      additionalFields: {
+        role: {
+          type: "string",
+          required: false,
+          defaultValue: "user",
+          input: false, // Users can't set their own role during signup
+        },
+      },
+    },
     plugins: [
       oAuthProxy({
         /**

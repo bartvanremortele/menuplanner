@@ -10,17 +10,17 @@ import {
 } from "@menuplanner/db";
 import { Ingredient } from "@menuplanner/db/schema";
 
-import { protectedProcedure } from "../trpc";
+import { adminProcedure } from "../../trpc";
 
 export const ingredientRouter = {
-  all: protectedProcedure.query(({ ctx }) => {
+  all: adminProcedure.query(({ ctx }) => {
     return ctx.db.query.Ingredient.findMany({
       orderBy: desc(Ingredient.id),
       limit: 100,
     });
   }),
 
-  byId: protectedProcedure
+  byId: adminProcedure
     .input(z.object({ id: z.string().uuid() }))
     .query(({ ctx, input }) => {
       return ctx.db.query.Ingredient.findFirst({
@@ -28,7 +28,7 @@ export const ingredientRouter = {
       });
     }),
 
-  search: protectedProcedure
+  search: adminProcedure
     .input(z.object({ query: z.string() }))
     .query(({ ctx, input }) => {
       if (!input.query) {
@@ -44,22 +44,20 @@ export const ingredientRouter = {
       });
     }),
 
-  create: protectedProcedure
+  create: adminProcedure
     .input(CreateIngredientSchema)
     .mutation(({ ctx, input }) => {
       return ctx.db.insert(Ingredient).values(input);
     }),
 
-  update: protectedProcedure
+  update: adminProcedure
     .input(UpdateIngredientSchema)
     .mutation(({ ctx, input }) => {
       const { id, ...data } = input;
       return ctx.db.update(Ingredient).set(data).where(eq(Ingredient.id, id));
     }),
 
-  delete: protectedProcedure
-    .input(z.string().uuid())
-    .mutation(({ ctx, input }) => {
-      return ctx.db.delete(Ingredient).where(eq(Ingredient.id, input));
-    }),
+  delete: adminProcedure.input(z.string().uuid()).mutation(({ ctx, input }) => {
+    return ctx.db.delete(Ingredient).where(eq(Ingredient.id, input));
+  }),
 } satisfies TRPCRouterRecord;

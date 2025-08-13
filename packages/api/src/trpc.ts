@@ -35,6 +35,16 @@ export const createTRPCContext = async (opts: {
   const session = await authApi.getSession({
     headers: opts.headers,
   });
+
+  // Debug logging for session
+  if (!session) {
+    console.log("[TRPC Context] No session found");
+  } else {
+    console.log(
+      `[TRPC Context] Session found for user: ${session.user.id} with role: ${session.user.role}`,
+    );
+  }
+
   return {
     authApi,
     session,
@@ -116,9 +126,13 @@ export const publicProcedure = t.procedure.use(timingMiddleware);
  */
 export const protectedProcedure = t.procedure
   .use(timingMiddleware)
-  .use(({ ctx, next }) => {
+  .use(({ ctx, next, path }) => {
     if (!ctx.session?.user) {
-      throw new TRPCError({ code: "UNAUTHORIZED" });
+      console.error(`[TRPC] UNAUTHORIZED: No session for path ${path}`);
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: `Authentication required for ${path}`,
+      });
     }
     return next({
       ctx: {
@@ -127,3 +141,24 @@ export const protectedProcedure = t.procedure
       },
     });
   });
+
+/**
+ * Admin procedure
+ *
+ * ONLY accessible to users with role "admin". Throws FORBIDDEN if user is not an admin.
+ */
+export const adminProcedure = protectedProcedure.use(({ ctx, next, path }) => {
+  // Check if user has admin role
+  if (ctx.session.user.role !== "admin") {
+    console.error(
+      `[TRPC] FORBIDDEN: User ${ctx.session.user.id} with role '${ctx.session.user.role}' attempted to access admin route ${path}`,
+    );
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: `Admin access required for ${path}`,
+    });
+  }
+  return next({
+    ctx,
+  });
+});

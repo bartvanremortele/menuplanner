@@ -5,9 +5,19 @@ import { useGetRecipes } from "@/features/recipes/api/use-recipes";
 import { RecipeCard, RecipeCardSkeleton } from "./recipe-card";
 
 export function RecipeList() {
-  const { data: recipes } = useGetRecipes();
+  const { data: recipes, isLoading } = useGetRecipes();
 
-  if (recipes.length === 0) {
+  if (isLoading) {
+    return (
+      <div className="flex w-full flex-col gap-4">
+        <RecipeCardSkeleton />
+        <RecipeCardSkeleton />
+        <RecipeCardSkeleton />
+      </div>
+    );
+  }
+
+  if (!recipes || recipes.length === 0) {
     return (
       <div className="relative flex w-full flex-col gap-4">
         <RecipeCardSkeleton pulse={false} />

@@ -15,6 +15,13 @@
       "when": 1754327748706,
       "tag": "0001_uuid_migration_safe",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1755063026450,
+      "tag": "0002_tired_hannibal_king",
+      "breakpoints": true
     }
   ]
 }

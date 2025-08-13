@@ -19,7 +19,7 @@ import {
 
 export function IngredientsTable() {
   const router = useRouter();
-  const { data: ingredients } = useGetIngredients();
+  const { data: ingredients, isLoading } = useGetIngredients();
   const deleteMutation = useDeleteIngredient();
   // Define columns
   const columns: ColumnDef<Ingredient>[] = [
@@ -96,10 +96,24 @@ export function IngredientsTable() {
     ]),
   ];
 
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="h-8 w-[250px] animate-pulse rounded bg-muted" />
+          <div className="h-8 w-[100px] animate-pulse rounded bg-muted" />
+        </div>
+        <div className="rounded-md border">
+          <div className="h-[400px] animate-pulse bg-muted/10" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <DataTable
       columns={columns}
-      data={ingredients}
+      data={ingredients ?? []}
       searchKey="name"
       defaultPageSize={20}
       onRowClick={(row) =>

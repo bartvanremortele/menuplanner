@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { IngredientsTable } from "@/features/ingredients/components/ingredients-table";
 import { IconPlus } from "@tabler/icons-react";
