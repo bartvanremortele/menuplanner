@@ -259,7 +259,7 @@ export default function WeeklyMenuScreen() {
                         className="h-10 w-10 rounded"
                       />
                       <View className="flex-1">
-                        <Text className="text-sm font-medium text-white capitalize">
+                        <Text className="text-sm font-medium capitalize text-white">
                           {weeklyMenu[dayIndex]?.[mealType]?.name ??
                             `${mealType} Recipe`}
                         </Text>
@@ -271,7 +271,7 @@ export default function WeeklyMenuScreen() {
                         </View>
                       </View>
                       <Badge variant="outline" className="border-gray-600">
-                        <Text className="text-xs text-gray-400 capitalize">
+                        <Text className="text-xs capitalize text-gray-400">
                           {mealType}
                         </Text>
                       </Badge>

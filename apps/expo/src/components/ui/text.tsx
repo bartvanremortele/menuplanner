@@ -19,7 +19,7 @@ function Text({
   return (
     <Component
       className={cn(
-        "web:select-text text-foreground text-base",
+        "web:select-text text-base text-foreground",
         textClass,
         className,
       )}

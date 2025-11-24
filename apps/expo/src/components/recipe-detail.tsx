@@ -45,7 +45,7 @@ export default function RecipeDetail({
         />
         <View className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
 
-        <View className="absolute right-4 bottom-4 left-4">
+        <View className="absolute bottom-4 left-4 right-4">
           <Text className="mb-2 text-2xl font-bold text-white">
             {recipe.title}
           </Text>

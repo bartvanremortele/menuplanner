@@ -14,7 +14,7 @@ const buttonVariants = cva(
         default: "web:hover:opacity-90 bg-primary active:opacity-90",
         destructive: "web:hover:opacity-90 bg-destructive active:opacity-90",
         outline:
-          "web:hover:bg-accent web:hover:text-accent-foreground border-input bg-background active:bg-accent border",
+          "web:hover:bg-accent web:hover:text-accent-foreground border border-input bg-background active:bg-accent",
         secondary: "web:hover:opacity-80 bg-secondary active:opacity-80",
         ghost:
           "web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent",
@@ -35,7 +35,7 @@ const buttonVariants = cva(
 );
 
 const buttonTextVariants = cva(
-  "web:whitespace-nowrap native:text-base web:transition-colors text-foreground text-sm font-medium",
+  "web:whitespace-nowrap native:text-base web:transition-colors text-sm font-medium text-foreground",
   {
     variants: {
       variant: {
