@@ -18,6 +18,19 @@ interface ImageUploadProps {
   recipeId?: string;
 }
 
+function isValidImageUrl(url: string | undefined): url is string {
+  if (!url) return false;
+  try {
+    // Check if it's a data URI
+    if (url.startsWith("data:image/")) return true;
+    // Check if it's a valid HTTP(S) URL
+    const urlObj = new URL(url);
+    return urlObj.protocol === "http:" || urlObj.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 export function ImageUpload({
   value,
   onChange,
@@ -25,21 +38,28 @@ export function ImageUpload({
   disabled,
   recipeId,
 }: ImageUploadProps) {
-  const [preview, setPreview] = React.useState<string | undefined>(value);
+  const [preview, setPreview] = React.useState<string | undefined>();
   const [isUploading, setIsUploading] = React.useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const createImageUrl = useCreateRecipeImageUrl();
 
   // If value is an imageKey, construct the full URL
   React.useEffect(() => {
-    if (value && !value.startsWith("http") && !value.startsWith("data:")) {
-      const publicUrl = supabase.storage
-        .from("recipe-images")
-        .getPublicUrl(value).data.publicUrl;
-      setPreview(publicUrl);
-    } else {
-      setPreview(value);
+    if (!value) {
+      setPreview(undefined);
+      return;
     }
+
+    // If it's already a valid URL or data URI, use it directly
+    if (value.startsWith("http") || value.startsWith("data:")) {
+      setPreview(value);
+      return;
+    }
+
+    // Otherwise, assume it's a storage path and construct the URL
+    const publicUrl = supabase.storage.from("recipe-images").getPublicUrl(value)
+      .data.publicUrl;
+    setPreview(publicUrl);
   }, [value]);
 
   const handleFileChange = async (
@@ -114,7 +134,7 @@ export function ImageUpload({
         disabled={disabled}
       />
 
-      {preview ? (
+      {isValidImageUrl(preview) ? (
         <div className="relative">
           <Image
             src={preview}
@@ -127,7 +147,7 @@ export function ImageUpload({
             type="button"
             variant="destructive"
             size="icon"
-            className="absolute right-2 top-2"
+            className="absolute top-2 right-2"
             onClick={handleRemove}
             disabled={disabled}
           >
@@ -139,19 +159,19 @@ export function ImageUpload({
           type="button"
           onClick={handleClick}
           disabled={disabled === true || isUploading === true}
-          className="flex h-64 w-full flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-muted-foreground/25 transition-colors hover:border-muted-foreground/50"
+          className="border-muted-foreground/25 hover:border-muted-foreground/50 flex h-64 w-full flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed transition-colors"
         >
           {isUploading ? (
             <>
-              <Loader2 className="h-10 w-10 animate-spin text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">
+              <Loader2 className="text-muted-foreground h-10 w-10 animate-spin" />
+              <span className="text-muted-foreground text-sm">
                 Uploading...
               </span>
             </>
           ) : (
             <>
-              <Upload className="h-10 w-10 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">
+              <Upload className="text-muted-foreground h-10 w-10" />
+              <span className="text-muted-foreground text-sm">
                 Click to upload recipe image
               </span>
             </>

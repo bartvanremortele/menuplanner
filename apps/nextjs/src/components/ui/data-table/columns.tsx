@@ -137,7 +137,17 @@ export function createDateColumn<T>(
       <DataTableColumnHeader column={column} title={title} />
     ),
     cell: ({ row }) => {
-      const date = row.getValue(accessorKey as string);
+      const raw = row.getValue(accessorKey as string);
+      if (raw == null) return "-";
+
+      let date: Date | null = null;
+      if (raw instanceof Date) {
+        date = raw;
+      } else if (typeof raw === "number" || typeof raw === "string") {
+        const d = new Date(raw);
+        date = isNaN(d.getTime()) ? null : d;
+      }
+
       return date ? format(date, dateFormat) : "-";
     },
   };
