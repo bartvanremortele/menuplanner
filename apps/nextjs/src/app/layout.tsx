@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ui/theme";
 import { Toaster } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
 import { TRPCReactProvider } from "@/trpc/react";
+import { Geist, Geist_Mono } from "geist/font";
 
 import "@/app/globals.css";
 
@@ -37,21 +37,15 @@ export const viewport: Viewport = {
   ],
 };
 
-const geistSans = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist-sans",
-});
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
-});
+const geistSans = Geist({ variable: "--font-geist-sans" });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono" });
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans text-foreground antialiased",
+          "bg-background text-foreground min-h-screen font-sans antialiased",
           geistSans.variable,
           geistMono.variable,
         )}
