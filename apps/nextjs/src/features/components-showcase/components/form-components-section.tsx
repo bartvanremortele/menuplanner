@@ -147,7 +147,7 @@ export function FormComponentsSection() {
             <Checkbox id="terms" />
             <Label
               htmlFor="terms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Accept terms and conditions
             </Label>
@@ -156,7 +156,7 @@ export function FormComponentsSection() {
             <Checkbox id="marketing" defaultChecked />
             <Label
               htmlFor="marketing"
-              className="text-sm font-medium leading-none"
+              className="text-sm leading-none font-medium"
             >
               Receive marketing emails
             </Label>
@@ -165,7 +165,7 @@ export function FormComponentsSection() {
             <Checkbox id="disabled-check" disabled />
             <Label
               htmlFor="disabled-check"
-              className="text-sm font-medium leading-none opacity-70"
+              className="text-sm leading-none font-medium opacity-70"
             >
               Disabled checkbox
             </Label>
@@ -265,7 +265,7 @@ export function FormComponentsSection() {
               control={form.control}
               name="notifications"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <FormItem className="flex flex-row items-start space-y-0 space-x-3">
                   <FormControl>
                     <Checkbox
                       checked={field.value}

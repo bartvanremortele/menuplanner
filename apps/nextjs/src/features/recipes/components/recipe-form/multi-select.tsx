@@ -114,7 +114,7 @@ export function MultiSelect({
               {selectedLabels[index]}
               <button
                 type="button"
-                className="ml-1 hover:text-destructive"
+                className="hover:text-destructive ml-1"
                 onClick={() => handleRemove(value)}
               >
                 <X className="h-3 w-3" />

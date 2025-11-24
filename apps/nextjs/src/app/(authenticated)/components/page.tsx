@@ -36,12 +36,12 @@ function ComponentsShowcaseSkeleton() {
     <div className="space-y-8">
       {[...Array(3)].map((_, i) => (
         <div key={i} className="space-y-4">
-          <div className="h-8 w-48 animate-pulse rounded bg-muted" />
+          <div className="bg-muted h-8 w-48 animate-pulse rounded" />
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {[...Array(6)].map((_, j) => (
               <div
                 key={j}
-                className="h-32 animate-pulse rounded-lg border bg-muted/10"
+                className="bg-muted/10 h-32 animate-pulse rounded-lg border"
               />
             ))}
           </div>

@@ -181,7 +181,7 @@ export function LayoutComponentsSection() {
                 </SheetDescription>
               </SheetHeader>
               <div className="grid gap-4 py-4">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Sheet content goes here...
                 </p>
               </div>
@@ -200,7 +200,7 @@ export function LayoutComponentsSection() {
                 </SheetDescription>
               </SheetHeader>
               <div className="grid gap-4 py-4">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Navigation items would go here...
                 </p>
               </div>
@@ -226,7 +226,7 @@ export function LayoutComponentsSection() {
               </DrawerDescription>
             </DrawerHeader>
             <div className="p-4">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Drawer content goes here. Perfect for mobile-first interactions.
               </p>
             </div>

@@ -14,11 +14,11 @@ function RecipeTableSkeleton() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <div className="h-8 w-[250px] animate-pulse rounded bg-muted" />
-        <div className="h-8 w-[100px] animate-pulse rounded bg-muted" />
+        <div className="bg-muted h-8 w-[250px] animate-pulse rounded" />
+        <div className="bg-muted h-8 w-[100px] animate-pulse rounded" />
       </div>
       <div className="rounded-md border">
-        <div className="h-[400px] animate-pulse bg-muted/10" />
+        <div className="bg-muted/10 h-[400px] animate-pulse" />
       </div>
     </div>
   );

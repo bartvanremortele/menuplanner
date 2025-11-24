@@ -94,17 +94,17 @@ export function RecipeView({ recipeId }: RecipeViewProps) {
       {/* Ingredients Section */}
       {recipe.ingredients.length > 0 && (
         <div className="mt-8 border-t pt-6">
-          <h4 className="mb-4 text-sm font-medium leading-6 text-foreground">
+          <h4 className="text-foreground mb-4 text-sm leading-6 font-medium">
             Ingredients
           </h4>
-          <ul className="divide-y divide-border">
+          <ul className="divide-border divide-y">
             {recipe.ingredients.map((item) => (
               <li
                 key={item.ingredient.id}
                 className="flex justify-between py-3"
               >
                 <span className="text-sm">{item.ingredient.name}</span>
-                <span className="text-sm text-muted-foreground">
+                <span className="text-muted-foreground text-sm">
                   {item.amount} {item.unit.name}
                 </span>
               </li>

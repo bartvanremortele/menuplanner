@@ -16,11 +16,11 @@ export function DetailHeader({
 }: DetailHeaderProps) {
   return (
     <div className={cn("px-4 sm:px-0", className)}>
-      <h3 className="text-base font-semibold leading-7 text-foreground">
+      <h3 className="text-foreground text-base leading-7 font-semibold">
         {title}
       </h3>
       {subtitle && (
-        <p className="mt-1 max-w-2xl text-sm leading-6 text-muted-foreground">
+        <p className="text-muted-foreground mt-1 max-w-2xl text-sm leading-6">
           {subtitle}
         </p>
       )}

@@ -101,7 +101,7 @@ export function DataDisplaySection() {
           <TabsContent value="account" className="space-y-4">
             <div className="space-y-2">
               <h4 className="text-sm font-medium">Account Settings</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Make changes to your account here. Click save when you're done.
               </p>
             </div>
@@ -109,7 +109,7 @@ export function DataDisplaySection() {
           <TabsContent value="password" className="space-y-4">
             <div className="space-y-2">
               <h4 className="text-sm font-medium">Password Settings</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Change your password here. After saving, you'll be logged out.
               </p>
             </div>
@@ -117,7 +117,7 @@ export function DataDisplaySection() {
           <TabsContent value="team" className="space-y-4">
             <div className="space-y-2">
               <h4 className="text-sm font-medium">Team Settings</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Manage your team members and their roles here.
               </p>
             </div>
@@ -144,15 +144,15 @@ export function DataDisplaySection() {
               proident.
             </DL.Item>
             <DL.Item term="Attachments">
-              <ul className="divide-y divide-border rounded-md border">
-                <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+              <ul className="divide-border divide-y rounded-md border">
+                <li className="flex items-center justify-between py-3 pr-4 pl-3 text-sm">
                   <div className="flex w-0 flex-1 items-center">
                     <span className="ml-2 w-0 flex-1 truncate">
                       resume_back_end_developer.pdf
                     </span>
                   </div>
                 </li>
-                <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+                <li className="flex items-center justify-between py-3 pr-4 pl-3 text-sm">
                   <div className="flex w-0 flex-1 items-center">
                     <span className="ml-2 w-0 flex-1 truncate">
                       coverletter_back_end_developer.pdf
@@ -190,7 +190,7 @@ export function DataDisplaySection() {
           >
             Delete Item
           </Button>
-          <span className="text-sm text-muted-foreground">
+          <span className="text-muted-foreground text-sm">
             Click to see the delete confirmation dialog
           </span>
         </div>

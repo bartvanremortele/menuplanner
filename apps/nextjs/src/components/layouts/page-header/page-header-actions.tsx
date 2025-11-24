@@ -96,7 +96,7 @@ export function PageHeaderActions({
   const secondaryActions = childrenArray.slice(1);
 
   return (
-    <div className={cn("mt-5 flex lg:ml-4 lg:mt-0", className)}>
+    <div className={cn("mt-5 flex lg:mt-0 lg:ml-4", className)}>
       {desktopActions}
 
       {/* Mobile primary action */}

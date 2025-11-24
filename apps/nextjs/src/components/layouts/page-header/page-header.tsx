@@ -27,19 +27,19 @@ export function PageHeader({
   const content = (
     <>
       <div className="min-w-0 flex-1">
-        <h2 className="text-2xl/7 font-bold text-foreground sm:truncate sm:text-3xl sm:tracking-tight">
+        <h2 className="text-foreground text-2xl/7 font-bold sm:truncate sm:text-3xl sm:tracking-tight">
           {title}
         </h2>
         {(subtitle ?? meta) && (
           <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
             {subtitle && (
-              <p className="text-sm text-muted-foreground">{subtitle}</p>
+              <p className="text-muted-foreground text-sm">{subtitle}</p>
             )}
             {meta}
           </div>
         )}
       </div>
-      {actions && <div className="mt-5 flex lg:ml-4 lg:mt-0">{actions}</div>}
+      {actions && <div className="mt-5 flex lg:mt-0 lg:ml-4">{actions}</div>}
     </>
   );
 

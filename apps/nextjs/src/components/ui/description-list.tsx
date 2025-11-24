@@ -18,7 +18,7 @@ interface DescriptionTermProps {
 export function DescriptionTerm({ children, className }: DescriptionTermProps) {
   return (
     <dt
-      className={cn("text-sm font-medium leading-6 text-foreground", className)}
+      className={cn("text-foreground text-sm leading-6 font-medium", className)}
     >
       {children}
     </dt>
@@ -37,7 +37,7 @@ export function DescriptionDetails({
   return (
     <dd
       className={cn(
-        "mt-1 text-sm leading-6 text-muted-foreground sm:col-span-2 sm:mt-0",
+        "text-muted-foreground mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0",
         className,
       )}
     >

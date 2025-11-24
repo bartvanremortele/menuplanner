@@ -16,11 +16,11 @@ export function PageHeaderMetaItem({
   return (
     <div
       className={cn(
-        "mt-2 flex items-center text-sm text-muted-foreground",
+        "text-muted-foreground mt-2 flex items-center text-sm",
         className,
       )}
     >
-      <Icon className="mr-1.5 size-5 shrink-0 text-muted-foreground/70" />
+      <Icon className="text-muted-foreground/70 mr-1.5 size-5 shrink-0" />
       {label}
     </div>
   );

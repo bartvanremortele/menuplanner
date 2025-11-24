@@ -31,19 +31,19 @@ export function IngredientsTable() {
       (ingredient) => (
         <div className="space-y-1 text-sm">
           <div className="flex items-center gap-2">
-            <span className="w-16 text-muted-foreground">Calories:</span>
+            <span className="text-muted-foreground w-16">Calories:</span>
             <span className="font-medium">{ingredient.kcal ?? "-"} kcal</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-16 text-muted-foreground">Protein:</span>
+            <span className="text-muted-foreground w-16">Protein:</span>
             <span>{ingredient.eiwit ?? "-"}g</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-16 text-muted-foreground">Carbs:</span>
+            <span className="text-muted-foreground w-16">Carbs:</span>
             <span>{ingredient.koolhydraten ?? "-"}g</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-16 text-muted-foreground">Fat:</span>
+            <span className="text-muted-foreground w-16">Fat:</span>
             <span>{ingredient.vet ?? "-"}g</span>
           </div>
         </div>
@@ -100,11 +100,11 @@ export function IngredientsTable() {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <div className="h-8 w-[250px] animate-pulse rounded bg-muted" />
-          <div className="h-8 w-[100px] animate-pulse rounded bg-muted" />
+          <div className="bg-muted h-8 w-[250px] animate-pulse rounded" />
+          <div className="bg-muted h-8 w-[100px] animate-pulse rounded" />
         </div>
         <div className="rounded-md border">
-          <div className="h-[400px] animate-pulse bg-muted/10" />
+          <div className="bg-muted/10 h-[400px] animate-pulse" />
         </div>
       </div>
     );

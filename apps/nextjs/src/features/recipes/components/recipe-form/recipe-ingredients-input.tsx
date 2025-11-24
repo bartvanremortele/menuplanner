@@ -151,7 +151,7 @@ export function RecipeIngredientsInput() {
       </div>
 
       {fields.length === 0 && (
-        <div className="py-6 text-center text-muted-foreground">
+        <div className="text-muted-foreground py-6 text-center">
           No ingredients added yet. Click "Add Ingredient" to start.
         </div>
       )}
