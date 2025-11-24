@@ -13,12 +13,17 @@ import { paths } from "@/config/paths";
 import { RecipeUpdate } from "@/features/recipes/components/recipe-update";
 import { IconArrowLeft } from "@tabler/icons-react";
 
-export default function EditRecipePage({ params }: { params: { id: string } }) {
+export default async function EditRecipePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
   return (
     <div className="flex-1 space-y-4 p-4 md:p-6">
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" asChild>
-          <Link href={paths.app.recipes.detail.getHref(params.id)}>
+          <Link href={paths.app.recipes.detail.getHref(id)}>
             <IconArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
@@ -32,7 +37,7 @@ export default function EditRecipePage({ params }: { params: { id: string } }) {
         </CardHeader>
         <CardContent>
           <Suspense fallback={<EditRecipeSkeleton />}>
-            <RecipeUpdate recipeId={params.id} />
+            <RecipeUpdate recipeId={id} />
           </Suspense>
         </CardContent>
       </Card>

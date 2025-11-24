@@ -3,7 +3,8 @@ import { ThemeProvider } from "@/components/ui/theme";
 import { Toaster } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
 import { TRPCReactProvider } from "@/trpc/react";
-import { Geist, Geist_Mono } from "geist/font";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 
 import "@/app/globals.css";
 
@@ -37,17 +38,14 @@ export const viewport: Viewport = {
   ],
 };
 
-const geistSans = Geist({ variable: "--font-geist-sans" });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono" });
-
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           "bg-background text-foreground min-h-screen font-sans antialiased",
-          geistSans.variable,
-          geistMono.variable,
+          GeistSans.variable,
+          GeistMono.variable,
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
