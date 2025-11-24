@@ -1,0 +1,12 @@
+# Local environment and data
+.env
+products.db
+
+# Drizzle output
+/drizzle/
+
+# Debug artifacts
+*.png
+
+# Node modules
+node_modules/

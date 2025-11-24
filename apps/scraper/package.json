@@ -1,0 +1,34 @@
+{
+  "name": "@menuplanner/scraper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Carrefour BE scraper (paused / experimental)",
+  "scripts": {
+    "start": "node src/index.js",
+    "scrape": "node src/scraper.js",
+    "scrape:quick": "QUICK_SCRAPE=true node src/scraper.js",
+    "db:generate": "drizzle-kit generate --config ./drizzle.config.js",
+    "db:migrate": "drizzle-kit migrate --config ./drizzle.config.js",
+    "db:studio": "drizzle-kit studio --config ./drizzle.config.js",
+    "cleanup": "node scripts/cleanup.js",
+    "lint": "eslint",
+    "format": "prettier --check . --ignore-path ../../.gitignore"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.5.0",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "catalog:",
+    "node-cron": "^3.0.3",
+    "p-limit": "^6.1.0",
+    "puppeteer": "^23.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "devDependencies": {
+    "@menuplanner/eslint-config": "workspace:*",
+    "drizzle-kit": "catalog:",
+    "eslint": "catalog:",
+    "prettier": "catalog:"
+  }
+}
